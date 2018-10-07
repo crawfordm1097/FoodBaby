@@ -7,7 +7,18 @@ var listingSchema = new Schema({
     required: true
   },
   time: {
-    type: Date,
+    start: {
+      type: Date,
+      required: true
+    },
+    end: {
+      type: Date,
+      required: true
+    }
+  },
+  posted_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true
   },
   location: {
