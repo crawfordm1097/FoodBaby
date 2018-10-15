@@ -20,7 +20,7 @@ let testListing = new Listing({
 });
 
 
-db.clearUsers();
-db.clearListings();
+db.users.clear();
+db.listings.clear();
 
 db.close();

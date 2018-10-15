@@ -11,67 +11,123 @@ var running = 0;
 var shutdown = false;
 // var closeOps = [];
 
-var db = {
-  clearUsers: () => {
+var db = {};
+
+db.users = {
+  clear: () => {
     up();
     User.deleteMany({}, (err) => {
+      down();
+
       if (err) {
         console.log(err);
       }
-
-      down();
     });
   },
 
-  addUser: (user) => {
+  add: (user) => {
     user = new User(user);
 
     up();
     user.save((err) => {
+      down();
+
       if (err) {
         console.log(err);
       }
-
-      down();
     });
   },
 
-  clearListings: () => {
+  delete: (user) => {
+    up();
+    User.deleteOne(user, (err, entry) => {
+      down();
+
+      if (err) {
+        console.log(err);
+        return false;
+      }
+
+      return true;
+    });
+  },
+
+  findOne: (user) => {
+    up();
+    User.findOne(user, (err, entry) => {
+      down();
+
+      if (err) {
+        console.log(err);
+        return undefined;
+      }
+
+      return entry;
+    });
+  }
+}
+
+db.listings = {
+  clear: () => {
     up();
     Listing.deleteMany({}, (err) => {
+      down();
+
       if (err) {
         console.log(err);
       }
-
-      down();
     });
   },
 
-  addListing: (listing) => {
+  add: (listing) => {
     listing = new Listing(listing);
 
     up();
     listing.save((err) => {
+      down();
+
       if (err) {
         console.log(err);
       }
-
-      down();
     });
   },
 
-  // onClose: (func) => {
-  //   closeOps.push(func);
-  // },
+  delete: (listing) => {
+    up();
+    Listing.deleteOne(listing, (err, entry) => {
+      down();
 
-  close: () => {
-    if (!running) {
-      mongoose.disconnect();
-    } else {
-      shutdown = true;
-    }
+      if (err) {
+        console.log(err);
+        return false;
+      }
+
+      return true;
+    });
+  },
+
+  findOne: (listing) => {
+    up();
+    User.findOne(listing, (err, entry) => {
+      down();
+
+      if (err) {
+        console.log(err);
+        return undefined;
+      }
+
+      return entry;
+    });
   }
 };
+
+db.close = function() {
+  if (!running) {
+    mongoose.disconnect();
+  } else {
+    shutdown = true;
+  }
+}
 
 function up() {
   running += 1;
