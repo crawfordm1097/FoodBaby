@@ -1,0 +1,1204 @@
+{
+  "entries": [
+    {
+      "name": "Vrzxs",
+      "time": {
+        "start": "2018-12-24 12:32:59 UTC",
+        "end": "2018-12-24 15:32:59 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -26.3374785,
+          "longitude": -60.4304186
+        },
+        "building": {
+          "name": "BOP",
+          "room": "2",
+          "address": "35038 Crownhardt Parkway"
+        }
+      },
+      "food_type": "Cake Circle, Foil, Scallop",
+      "meta": {
+        "up": 75,
+        "down": 64,
+        "flagged": 11
+      }
+    },
+    {
+      "name": "Hjinr",
+      "time": {
+        "start": "2019-01-25 22:06:54 UTC",
+        "end": "2019-01-26 00:06:54 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -23.5388072,
+          "longitude": -47.4563943
+        },
+        "building": {
+          "name": "XZV",
+          "room": "162",
+          "address": "1 Novick Crossing"
+        }
+      },
+      "food_type": "Lamb Tenderloin Nz Fr",
+      "meta": {
+        "up": 26,
+        "down": 5,
+        "flagged": 21
+      }
+    },
+    {
+      "name": "Nlkuz",
+      "time": {
+        "start": "2019-06-04 22:02:24 UTC",
+        "end": "2019-06-05 03:02:24 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 22.920341,
+          "longitude": 115.789204
+        },
+        "building": {
+          "name": "AHK",
+          "room": "963",
+          "address": "248 Clove Lane"
+        }
+      },
+      "food_type": "Red Currant Jelly",
+      "meta": {
+        "up": 99,
+        "down": 69,
+        "flagged": 30
+      }
+    },
+    {
+      "name": "Buqlo",
+      "time": {
+        "start": "2019-08-21 20:00:26 UTC",
+        "end": "2019-08-21 23:00:26 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 36.733165,
+          "longitude": 103.262152
+        },
+        "building": {
+          "name": "YTY",
+          "room": "26",
+          "address": "56345 Ridgeway Court"
+        }
+      },
+      "food_type": "Paper Towel Touchless",
+      "meta": {
+        "up": 37,
+        "down": 87,
+        "flagged": -50
+      }
+    },
+    {
+      "name": "Jfijz",
+      "time": {
+        "start": "2018-11-23 11:05:19 UTC",
+        "end": "2018-11-23 14:05:19 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 22.517585,
+          "longitude": 113.39277
+        },
+        "building": {
+          "name": "XJP",
+          "room": "905",
+          "address": "166 Dennis Pass"
+        }
+      },
+      "food_type": "Cloves - Whole",
+      "meta": {
+        "up": 93,
+        "down": 30,
+        "flagged": 63
+      }
+    },
+    {
+      "name": "Kzocg",
+      "time": {
+        "start": "2019-03-19 18:17:13 UTC",
+        "end": "2019-03-19 21:17:13 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 51.758626,
+          "longitude": 19.3010614
+        },
+        "building": {
+          "name": "VMF",
+          "room": "8345",
+          "address": "19 Transport Drive"
+        }
+      },
+      "food_type": "Wine - Red, Concha Y Toro",
+      "meta": {
+        "up": 33,
+        "down": 7,
+        "flagged": 26
+      }
+    },
+    {
+      "name": "Tfjxz",
+      "time": {
+        "start": "2019-01-08 22:13:50 UTC",
+        "end": "2019-01-09 03:13:50 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 3.2515532,
+          "longitude": 19.7770261
+        },
+        "building": {
+          "name": "ZKX",
+          "room": "95279",
+          "address": "4878 Utah Junction"
+        }
+      },
+      "food_type": "Juice - Clamato, 341 Ml",
+      "meta": {
+        "up": 30,
+        "down": 95,
+        "flagged": -65
+      }
+    },
+    {
+      "name": "Wmyrc",
+      "time": {
+        "start": "2018-12-21 04:53:35 UTC",
+        "end": "2018-12-21 05:53:35 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 4.3202706,
+          "longitude": 21.1861342
+        },
+        "building": {
+          "name": "ZPS",
+          "room": "43259",
+          "address": "4 International Court"
+        }
+      },
+      "food_type": "Coffee - Egg Nog Capuccino",
+      "meta": {
+        "up": 60,
+        "down": 31,
+        "flagged": 29
+      }
+    },
+    {
+      "name": "Rznbl",
+      "time": {
+        "start": "2019-04-08 00:53:24 UTC",
+        "end": "2019-04-08 06:53:24 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 31.988669,
+          "longitude": 100.682238
+        },
+        "building": {
+          "name": "TRJ",
+          "room": "24103",
+          "address": "135 Morningstar Way"
+        }
+      },
+      "food_type": "Mop Head - Cotton, 24 Oz",
+      "meta": {
+        "up": 9,
+        "down": 45,
+        "flagged": -36
+      }
+    },
+    {
+      "name": "Xqcav",
+      "time": {
+        "start": "2018-11-12 15:20:24 UTC",
+        "end": "2018-11-12 19:20:24 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 41.0635479,
+          "longitude": 23.958972
+        },
+        "building": {
+          "name": "HHK",
+          "room": "1",
+          "address": "70 Mcbride Park"
+        }
+      },
+      "food_type": "Garbage Bags - Clear",
+      "meta": {
+        "up": 51,
+        "down": 92,
+        "flagged": -41
+      }
+    },
+    {
+      "name": "Zhjoc",
+      "time": {
+        "start": "2019-02-25 08:12:37 UTC",
+        "end": "2019-02-25 12:12:37 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 48.3006708,
+          "longitude": 4.0710348
+        },
+        "building": {
+          "name": "LEF",
+          "room": "57398",
+          "address": "383 6th Place"
+        }
+      },
+      "food_type": "Nut - Hazelnut, Whole",
+      "meta": {
+        "up": 8,
+        "down": 37,
+        "flagged": -29
+      }
+    },
+    {
+      "name": "Bmvlb",
+      "time": {
+        "start": "2019-07-03 22:23:38 UTC",
+        "end": "2019-07-04 03:23:38 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 9.834832,
+          "longitude": -75.120521
+        },
+        "building": {
+          "name": "ZHW",
+          "room": "43",
+          "address": "34 Dawn Street"
+        }
+      },
+      "food_type": "Ice Cream - Super Sandwich",
+      "meta": {
+        "up": 61,
+        "down": 59,
+        "flagged": 2
+      }
+    },
+    {
+      "name": "Rifbe",
+      "time": {
+        "start": "2019-04-14 09:55:57 UTC",
+        "end": "2019-04-14 13:55:57 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -7.360381,
+          "longitude": 108.2659999
+        },
+        "building": {
+          "name": "EMA",
+          "room": "7",
+          "address": "292 Lindbergh Pass"
+        }
+      },
+      "food_type": "Yokaline",
+      "meta": {
+        "up": 44,
+        "down": 5,
+        "flagged": 39
+      }
+    },
+    {
+      "name": "Jumyh",
+      "time": {
+        "start": "2019-03-23 22:00:15 UTC",
+        "end": "2019-03-24 00:00:15 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 7.0024321,
+          "longitude": -9.4728244
+        },
+        "building": {
+          "name": "NGT",
+          "room": "0783",
+          "address": "8562 Chinook Court"
+        }
+      },
+      "food_type": "Carbonated Water - Blackcherry",
+      "meta": {
+        "up": 15,
+        "down": 83,
+        "flagged": -68
+      }
+    },
+    {
+      "name": "Qnogs",
+      "time": {
+        "start": "2019-06-30 12:08:28 UTC",
+        "end": "2019-06-30 18:08:28 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 39.896949,
+          "longitude": 116.414961
+        },
+        "building": {
+          "name": "ETK",
+          "room": "30687",
+          "address": "77 Prairieview Junction"
+        }
+      },
+      "food_type": "Veal - Inside Round / Top, Lean",
+      "meta": {
+        "up": 66,
+        "down": 81,
+        "flagged": -15
+      }
+    },
+    {
+      "name": "Atfjm",
+      "time": {
+        "start": "2018-11-08 20:57:58 UTC",
+        "end": "2018-11-08 23:57:58 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 26.497765,
+          "longitude": 101.738528
+        },
+        "building": {
+          "name": "TAF",
+          "room": "87442",
+          "address": "117 Pine View Road"
+        }
+      },
+      "food_type": "Chicken - White Meat, No Tender",
+      "meta": {
+        "up": 45,
+        "down": 25,
+        "flagged": 20
+      }
+    },
+    {
+      "name": "Qenmx",
+      "time": {
+        "start": "2018-12-10 16:44:04 UTC",
+        "end": "2018-12-10 17:44:04 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -8.4963229,
+          "longitude": 123.3766669
+        },
+        "building": {
+          "name": "RCF",
+          "room": "71117",
+          "address": "0 Sauthoff Court"
+        }
+      },
+      "food_type": "Appetizer - Mango Chevre",
+      "meta": {
+        "up": 84,
+        "down": 11,
+        "flagged": 73
+      }
+    },
+    {
+      "name": "Bfkwb",
+      "time": {
+        "start": "2019-01-05 18:06:15 UTC",
+        "end": "2019-01-05 22:06:15 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 22.6113591,
+          "longitude": 120.3493158
+        },
+        "building": {
+          "name": "QXO",
+          "room": "87173",
+          "address": "9140 Lakewood Plaza"
+        }
+      },
+      "food_type": "Lychee",
+      "meta": {
+        "up": 81,
+        "down": 72,
+        "flagged": 9
+      }
+    },
+    {
+      "name": "Dphjj",
+      "time": {
+        "start": "2019-08-03 06:00:01 UTC",
+        "end": "2019-08-03 12:00:01 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -11.4890016,
+          "longitude": -76.6622072
+        },
+        "building": {
+          "name": "IVZ",
+          "room": "76",
+          "address": "81399 Columbus Road"
+        }
+      },
+      "food_type": "Jagermeister",
+      "meta": {
+        "up": 30,
+        "down": 40,
+        "flagged": -10
+      }
+    },
+    {
+      "name": "Jgtqq",
+      "time": {
+        "start": "2019-02-21 12:00:19 UTC",
+        "end": "2019-02-21 14:00:19 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -7.5173045,
+          "longitude": 110.5933862
+        },
+        "building": {
+          "name": "RKU",
+          "room": "1486",
+          "address": "76 Fallview Point"
+        }
+      },
+      "food_type": "Oil - Avocado",
+      "meta": {
+        "up": 54,
+        "down": 45,
+        "flagged": 9
+      }
+    },
+    {
+      "name": "Kxvrm",
+      "time": {
+        "start": "2019-03-06 21:07:45 UTC",
+        "end": "2019-03-07 01:07:45 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 41.2609927,
+          "longitude": -8.3135858
+        },
+        "building": {
+          "name": "FJQ",
+          "room": "414",
+          "address": "25 Lunder Alley"
+        }
+      },
+      "food_type": "Tomato Paste",
+      "meta": {
+        "up": 21,
+        "down": 80,
+        "flagged": -59
+      }
+    },
+    {
+      "name": "Ctxaa",
+      "time": {
+        "start": "2019-04-25 08:39:41 UTC",
+        "end": "2019-04-25 13:39:41 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 35.520197,
+          "longitude": 105.728077
+        },
+        "building": {
+          "name": "OMM",
+          "room": "28",
+          "address": "26 Farragut Lane"
+        }
+      },
+      "food_type": "Leeks - Baby, White",
+      "meta": {
+        "up": 58,
+        "down": 89,
+        "flagged": -31
+      }
+    },
+    {
+      "name": "Klmrt",
+      "time": {
+        "start": "2019-01-03 21:51:52 UTC",
+        "end": "2019-01-04 03:51:52 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 22.937244,
+          "longitude": 113.384129
+        },
+        "building": {
+          "name": "MXS",
+          "room": "476",
+          "address": "8816 Myrtle Pass"
+        }
+      },
+      "food_type": "Bagel - Ched Chs Presliced",
+      "meta": {
+        "up": 59,
+        "down": 8,
+        "flagged": 51
+      }
+    },
+    {
+      "name": "Xmvjn",
+      "time": {
+        "start": "2019-03-18 10:47:10 UTC",
+        "end": "2019-03-18 16:47:10 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 63.1507161,
+          "longitude": 23.1069244
+        },
+        "building": {
+          "name": "YXU",
+          "room": "08187",
+          "address": "7 Vernon Plaza"
+        }
+      },
+      "food_type": "Mudslide",
+      "meta": {
+        "up": 63,
+        "down": 72,
+        "flagged": -9
+      }
+    },
+    {
+      "name": "Dahzm",
+      "time": {
+        "start": "2019-04-19 03:15:07 UTC",
+        "end": "2019-04-19 06:15:07 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 41.9560666,
+          "longitude": -8.645463
+        },
+        "building": {
+          "name": "EHO",
+          "room": "15925",
+          "address": "59 Gale Plaza"
+        }
+      },
+      "food_type": "Ice Cream Bar - Rolo Cone",
+      "meta": {
+        "up": 96,
+        "down": 10,
+        "flagged": 86
+      }
+    },
+    {
+      "name": "Pznyq",
+      "time": {
+        "start": "2019-08-03 19:36:59 UTC",
+        "end": "2019-08-03 23:36:59 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -9.2993916,
+          "longitude": 14.9096846
+        },
+        "building": {
+          "name": "YUY",
+          "room": "48",
+          "address": "0195 Algoma Terrace"
+        }
+      },
+      "food_type": "Cake - Mini Cheesecake",
+      "meta": {
+        "up": 97,
+        "down": 45,
+        "flagged": 52
+      }
+    },
+    {
+      "name": "Zkqsy",
+      "time": {
+        "start": "2019-08-09 06:28:13 UTC",
+        "end": "2019-08-09 12:28:13 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 18.3440652,
+          "longitude": -78.0171776
+        },
+        "building": {
+          "name": "DLN",
+          "room": "298",
+          "address": "47797 Dahle Avenue"
+        }
+      },
+      "food_type": "Pork - Chop, Frenched",
+      "meta": {
+        "up": 83,
+        "down": 25,
+        "flagged": 58
+      }
+    },
+    {
+      "name": "Itroh",
+      "time": {
+        "start": "2019-03-23 11:36:47 UTC",
+        "end": "2019-03-23 17:36:47 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": "-8.2383",
+          "longitude": "123.7896"
+        },
+        "building": {
+          "name": "YDM",
+          "room": "2",
+          "address": "66 6th Alley"
+        }
+      },
+      "food_type": "Wine - Red, Mouton Cadet",
+      "meta": {
+        "up": 72,
+        "down": 12,
+        "flagged": 60
+      }
+    },
+    {
+      "name": "Zgudw",
+      "time": {
+        "start": "2019-08-11 14:28:52 UTC",
+        "end": "2019-08-11 19:28:52 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 50.3844613,
+          "longitude": 13.1712929
+        },
+        "building": {
+          "name": "ZLC",
+          "room": "8",
+          "address": "0 Norway Maple Terrace"
+        }
+      },
+      "food_type": "Pork - Caul Fat",
+      "meta": {
+        "up": 74,
+        "down": 88,
+        "flagged": -14
+      }
+    },
+    {
+      "name": "Gkczv",
+      "time": {
+        "start": "2019-06-26 09:42:47 UTC",
+        "end": "2019-06-26 14:42:47 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 37.9416306,
+          "longitude": -77.3484049
+        },
+        "building": {
+          "name": "NEC",
+          "room": "739",
+          "address": "0 Pepper Wood Street"
+        }
+      },
+      "food_type": "Kiwi",
+      "meta": {
+        "up": 85,
+        "down": 57,
+        "flagged": 28
+      }
+    },
+    {
+      "name": "Bomsm",
+      "time": {
+        "start": "2018-12-03 05:46:56 UTC",
+        "end": "2018-12-03 06:46:56 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 6.61476,
+          "longitude": 8.0410634
+        },
+        "building": {
+          "name": "DBL",
+          "room": "06",
+          "address": "9403 Scoville Hill"
+        }
+      },
+      "food_type": "Wine - White, Riesling, Semi - Dry",
+      "meta": {
+        "up": 77,
+        "down": 96,
+        "flagged": -19
+      }
+    },
+    {
+      "name": "Beyjo",
+      "time": {
+        "start": "2019-04-03 07:10:08 UTC",
+        "end": "2019-04-03 11:10:08 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 49.8359632,
+          "longitude": 16.795095
+        },
+        "building": {
+          "name": "RYB",
+          "room": "16",
+          "address": "25549 Lotheville Alley"
+        }
+      },
+      "food_type": "Scallop - St. Jaques",
+      "meta": {
+        "up": 15,
+        "down": 29,
+        "flagged": -14
+      }
+    },
+    {
+      "name": "Taybg",
+      "time": {
+        "start": "2019-10-04 15:31:04 UTC",
+        "end": "2019-10-04 20:31:04 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 38.560256,
+          "longitude": 69.0165511
+        },
+        "building": {
+          "name": "LDS",
+          "room": "66902",
+          "address": "7852 Thierer Center"
+        }
+      },
+      "food_type": "Lamb - Bones",
+      "meta": {
+        "up": 39,
+        "down": 71,
+        "flagged": -32
+      }
+    },
+    {
+      "name": "Fxlwq",
+      "time": {
+        "start": "2019-05-24 13:37:22 UTC",
+        "end": "2019-05-24 19:37:22 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 47.6668709,
+          "longitude": 38.076284
+        },
+        "building": {
+          "name": "OUB",
+          "room": "2578",
+          "address": "30295 Coleman Crossing"
+        }
+      },
+      "food_type": "Lemonade - Black Cherry, 591 Ml",
+      "meta": {
+        "up": 54,
+        "down": 11,
+        "flagged": 43
+      }
+    },
+    {
+      "name": "Vjyyo",
+      "time": {
+        "start": "2018-12-27 07:40:28 UTC",
+        "end": "2018-12-27 08:40:28 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -33.7974423,
+          "longitude": 151.2502275
+        },
+        "building": {
+          "name": "XYR",
+          "room": "0",
+          "address": "36130 Pennsylvania Pass"
+        }
+      },
+      "food_type": "Veal - Loin",
+      "meta": {
+        "up": 14,
+        "down": 75,
+        "flagged": -61
+      }
+    },
+    {
+      "name": "Somwm",
+      "time": {
+        "start": "2018-10-29 13:14:30 UTC",
+        "end": "2018-10-29 14:14:30 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 52.2163528,
+          "longitude": 61.2809373
+        },
+        "building": {
+          "name": "VXW",
+          "room": "62",
+          "address": "464 Washington Lane"
+        }
+      },
+      "food_type": "Creme De Banane - Marie",
+      "meta": {
+        "up": 53,
+        "down": 10,
+        "flagged": 43
+      }
+    },
+    {
+      "name": "Lmwoq",
+      "time": {
+        "start": "2019-01-20 03:02:32 UTC",
+        "end": "2019-01-20 04:02:32 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 50.3235719,
+          "longitude": 22.3273146
+        },
+        "building": {
+          "name": "IGK",
+          "room": "8919",
+          "address": "30 Debs Place"
+        }
+      },
+      "food_type": "Cake - Bande Of Fruit",
+      "meta": {
+        "up": 28,
+        "down": 7,
+        "flagged": 21
+      }
+    },
+    {
+      "name": "Exmbn",
+      "time": {
+        "start": "2019-04-17 21:09:11 UTC",
+        "end": "2019-04-18 01:09:11 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 24.77848,
+          "longitude": 110.496593
+        },
+        "building": {
+          "name": "YNP",
+          "room": "524",
+          "address": "3138 Vera Circle"
+        }
+      },
+      "food_type": "Pork - Bones",
+      "meta": {
+        "up": 14,
+        "down": 11,
+        "flagged": 3
+      }
+    },
+    {
+      "name": "Nmdxg",
+      "time": {
+        "start": "2019-04-29 00:32:34 UTC",
+        "end": "2019-04-29 05:32:34 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 49.1931313,
+          "longitude": -0.3907558
+        },
+        "building": {
+          "name": "RTR",
+          "room": "41979",
+          "address": "2181 Di Loreto Parkway"
+        }
+      },
+      "food_type": "Cake - Miini Cheesecake Cherry",
+      "meta": {
+        "up": 52,
+        "down": 95,
+        "flagged": -43
+      }
+    },
+    {
+      "name": "Odtra",
+      "time": {
+        "start": "2019-04-20 03:03:48 UTC",
+        "end": "2019-04-20 07:03:48 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 12.2387911,
+          "longitude": 109.1967488
+        },
+        "building": {
+          "name": "KPC",
+          "room": "0",
+          "address": "9161 Declaration Parkway"
+        }
+      },
+      "food_type": "Chocolate - Semi Sweet, Calets",
+      "meta": {
+        "up": 83,
+        "down": 30,
+        "flagged": 53
+      }
+    },
+    {
+      "name": "Qxxcx",
+      "time": {
+        "start": "2018-11-10 00:02:50 UTC",
+        "end": "2018-11-10 06:02:50 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 5.4238154,
+          "longitude": -75.8185314
+        },
+        "building": {
+          "name": "XNO",
+          "room": "16433",
+          "address": "101 Homewood Court"
+        }
+      },
+      "food_type": "Nantucket Cranberry Juice",
+      "meta": {
+        "up": 10,
+        "down": 4,
+        "flagged": 6
+      }
+    },
+    {
+      "name": "Lfxlg",
+      "time": {
+        "start": "2019-06-22 19:34:42 UTC",
+        "end": "2019-06-23 00:34:42 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 14.5707891,
+          "longitude": 121.0272495
+        },
+        "building": {
+          "name": "MHH",
+          "room": "59",
+          "address": "420 Forster Road"
+        }
+      },
+      "food_type": "Caviar - Salmon",
+      "meta": {
+        "up": 26,
+        "down": 2,
+        "flagged": 24
+      }
+    },
+    {
+      "name": "Vyzem",
+      "time": {
+        "start": "2019-04-04 15:03:54 UTC",
+        "end": "2019-04-04 16:03:54 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -0.9411949,
+          "longitude": -79.2316042
+        },
+        "building": {
+          "name": "FWV",
+          "room": "458",
+          "address": "1842 Park Meadow Road"
+        }
+      },
+      "food_type": "Isomalt",
+      "meta": {
+        "up": 12,
+        "down": 5,
+        "flagged": 7
+      }
+    },
+    {
+      "name": "Yjdns",
+      "time": {
+        "start": "2019-03-04 23:47:22 UTC",
+        "end": "2019-03-05 03:47:22 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 46.4883734,
+          "longitude": 15.9702079
+        },
+        "building": {
+          "name": "IXD",
+          "room": "88351",
+          "address": "681 Lukken Way"
+        }
+      },
+      "food_type": "Mints - Striped Red",
+      "meta": {
+        "up": 23,
+        "down": 58,
+        "flagged": -35
+      }
+    },
+    {
+      "name": "Usqjf",
+      "time": {
+        "start": "2018-11-17 04:16:13 UTC",
+        "end": "2018-11-17 07:16:13 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 41.551649,
+          "longitude": -8.5906434
+        },
+        "building": {
+          "name": "DIQ",
+          "room": "45990",
+          "address": "90 Barnett Junction"
+        }
+      },
+      "food_type": "Wine - Touraine Azay - Le - Rideau",
+      "meta": {
+        "up": 11,
+        "down": 63,
+        "flagged": -52
+      }
+    },
+    {
+      "name": "Yyulh",
+      "time": {
+        "start": "2019-05-04 20:07:59 UTC",
+        "end": "2019-05-05 02:07:59 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": -23.7753206,
+          "longitude": -64.7701885
+        },
+        "building": {
+          "name": "HRH",
+          "room": "22310",
+          "address": "60612 Golf Terrace"
+        }
+      },
+      "food_type": "Beef - Tongue, Cooked",
+      "meta": {
+        "up": 75,
+        "down": 26,
+        "flagged": 49
+      }
+    },
+    {
+      "name": "Vazvo",
+      "time": {
+        "start": "2019-06-09 10:22:43 UTC",
+        "end": "2019-06-09 13:22:43 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 56.0488224,
+          "longitude": 39.0652818
+        },
+        "building": {
+          "name": "JBC",
+          "room": "90",
+          "address": "79 Columbus Terrace"
+        }
+      },
+      "food_type": "Table Cloth 120 Round White",
+      "meta": {
+        "up": 5,
+        "down": 28,
+        "flagged": -23
+      }
+    },
+    {
+      "name": "Iygjn",
+      "time": {
+        "start": "2019-07-08 18:42:27 UTC",
+        "end": "2019-07-08 23:42:27 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 16.7726174,
+          "longitude": -93.1905192
+        },
+        "building": {
+          "name": "KHB",
+          "room": "86",
+          "address": "968 Montana Plaza"
+        }
+      },
+      "food_type": "Fudge - Cream Fudge",
+      "meta": {
+        "up": 100,
+        "down": 80,
+        "flagged": 20
+      }
+    },
+    {
+      "name": "Malud",
+      "time": {
+        "start": "2019-07-15 08:47:59 UTC",
+        "end": "2019-07-15 14:47:59 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 36.8603732,
+          "longitude": 137.4284822
+        },
+        "building": {
+          "name": "TQB",
+          "room": "57",
+          "address": "17704 Old Shore Terrace"
+        }
+      },
+      "food_type": "Longos - Chicken Wings",
+      "meta": {
+        "up": 45,
+        "down": 91,
+        "flagged": -46
+      }
+    },
+    {
+      "name": "Dhgks",
+      "time": {
+        "start": "2019-03-11 20:21:22 UTC",
+        "end": "2019-03-12 01:21:22 UTC"
+      },
+      "location": {
+        "coordinates": {
+          "latitude": 22.613406,
+          "longitude": 113.190869
+        },
+        "building": {
+          "name": "MZN",
+          "room": "869",
+          "address": "97079 Arizona Center"
+        }
+      },
+      "food_type": "Wine - Alsace Riesling Reserve",
+      "meta": {
+        "up": 32,
+        "down": 62,
+        "flagged": -30
+      }
+    }
+  ]
+}
