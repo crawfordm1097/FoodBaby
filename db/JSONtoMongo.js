@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
     config = require('./config.js'),
     listings = require('./listings.json').entries;
 
-/* Connect to your database */
+/* Connect to db */
 mongoose.connect(config.db.uri);
 var db = mongoose.connection;
 
@@ -27,17 +27,8 @@ db.once('open', function () {
                 start: listings[i].time.start,
                 end: listings[i].time.end
             },
-            location: {
-                coordinates: {
-                    latitude: listings[i].location.coordinates.latitude,
-                    longitude: listings[i].location.coordinates.longitude
-                },
-                building: {
-                    name: listings[i].location.building.name,
-                    room: listings[i].location.building.room
-                },
-                address: listings[i].location.address
-            },
+            location: listings[i].location,
+            posted_by: listings[i].posted_by,
             food_type: listings[i].food_type,
             meta: {
                 up: listings[i].meta.up,
@@ -56,8 +47,3 @@ db.once('open', function () {
 setTimeout(function () {
     mongoose.connection.close();
 }, 1000);
-
-/* 
-  Once you've written + run the script, check out your MongoLab database to ensure that 
-  it saved everything correctly. 
-*/
