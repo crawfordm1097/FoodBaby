@@ -16,25 +16,24 @@ var listingSchema = new Schema({
       required: true
     }
   },
+  location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Location'
+  },
   posted_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  location: {
-    coordinates: {
-      latitude: Number,
-      longitude: Number,
-    },
-    building: {
-      name: String,
-      room: String,
-    },
-    address: String
-  },
   food_type: String,
   meta: {
-    up: Number,
-    down: Number,
+    up: {
+      type: Number,
+      default: 0
+    },
+    down: {
+      type: Number,
+      default: 0
+    },
     flagged: Number
   },
   created_at: {

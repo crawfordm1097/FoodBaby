@@ -6,3 +6,8 @@ body {
 a {
   color: #00B7FF;
 }
+
+.mapboxgl-popup-content {
+    max-height: 200px;
+    overflow-y: auto;
+}
