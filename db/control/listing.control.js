@@ -16,14 +16,17 @@ exports.create = function(req, res) {
 exports.find = function(req, res) {
   let listing = req.params.listingId;
 
-  listings.findOne({'_id': listing}, (err, entry) => {
-    if (err) {
-      console.log(err);
-      res.status(400).send(err);
-    } else {
-      res.json(entry);
-    }
-  });
+  listings.findOne({'_id': listing})
+    .populate('location')
+    .populate('posted_by')
+    .exec((err, entry) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      } else {
+        res.json(entry);
+      }
+    });
 }
 
 exports.update = function(req, res) {
@@ -54,7 +57,11 @@ exports.delete = function(req, res) {
 }
 
 exports.list = function(req, res) {
-  listings.find({}).sort('time.start').exec((err, entries) => {
+  listings.find({})
+    .sort('time.start')
+    .populate('location')
+    .populate('posted_by')
+    .exec((err, entries) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
@@ -65,7 +72,11 @@ exports.list = function(req, res) {
 }
 
 exports.recent = function(req, res) {
-  listings.findOne({}).sort('created_at').exec((err, entry) => {
+  listings.findOne({})
+    .sort('created_at')
+    .populate('location')
+    .populate('posted_by')
+    .exec((err, entry) => {
     if (err) {
       console.log(err);
       res.status(400).send(err);
