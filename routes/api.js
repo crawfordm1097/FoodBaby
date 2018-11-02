@@ -20,4 +20,7 @@ router.route('/listings/id/:listingId')
   .put(db.listings.update)
   .delete(db.listings.delete);
 
+router.route('/user/register')
+  .post(db.users.create);
+
 module.exports = router;

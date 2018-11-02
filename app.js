@@ -8,13 +8,10 @@ const express = require('express'),
   bodyParser   = require('body-parser'),
   indexRouter = require('./routes/index'),
   apiRouter = require('./routes/api');
- 
-
 
 var app = express();
 
-
-require('./config/passport.js')(passport); 
+require('./config/passport.js')(passport);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -30,7 +27,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // flash messages stored in session
 
 // once passport is setup, it is passed to the function in signup.js
-require('./routes/signup.js')(app, passport);
+// require('./routes/signup.js')(app, passport);
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
