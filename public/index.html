@@ -1,38 +1,36 @@
 <html>
 
-<head>
-  <title>Food Baby</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
-</head>
+  <head>
+    <title>Food Baby</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
 
-<body ng-app="foodBaby" ng-controller="ListingsCtrl">
-  <!-- Header for the page -->
-  <div id = "header">
-    <h1>Food Baby</h1>
-    <!-- Login button -->
-    <!-- For linking pages '#' is used -->
-    <a href ="#signup"> Sign up </a>
-    <a href ="#login"> Login </a>
-  </div>
-  
-  <div class ="container">
-    <!-- Views will be injected in this div -->
-    <div id = "main-content">
+  <body ng-app="foodBaby" ng-controller="ListingsCtrl">
+    <!-- Header for the page -->
+    <nav id = "header">
+      <h1><a href="#/">Food Baby</a></h1>
+      <!-- Login button -->
+      <!-- For linking pages '#' is used -->
+      <a href ="#signup"> Sign up </a>
+      <a href ="#login"> Login </a>
+    </nav>
+
+    <div class ="container">
+      <!-- Views will be injected in this div -->
       <div ng-view></div>
     </div>
-  </div>
 
-  <!-- Footer for the page -->
-  <div id = "footer">
-    <h1>Footer // TO DO</h1>
-  </div>
+    <!-- Footer for the page -->
+    <div id = "footer">
+      <h1>Footer // TO DO</h1>
+    </div>
 
-  <script src="/scripts/app.js"></script>
-</body>
+    <script src="/scripts/app.js"></script>
+  </body>
 
 </html>
