@@ -43,7 +43,7 @@ var listingSchema = new Schema({
   updated_at: Date
 });
 
-listingSchema.pre('save', (next) => {
+listingSchema.pre('save', function(next) {
   var time = new Date;
   this.updated_at = time;
   next();
