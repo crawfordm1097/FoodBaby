@@ -1,4 +1,5 @@
 var LocalStrategy   = require('passport-local').Strategy;
+var UserSchemaUtils = require('../db/control/user.control.js');
 var User = require('../db/models/user.schema.js');
 
 
@@ -18,46 +19,25 @@ module.exports = function(passport){
         });
     });
 
-    passport.use('local-signup', new LocalStrategy({
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true // allows us to pass back the entire request to the callback
-    },function(req, email, password, done) {
-        console.log(email);
-        console.log(password);
+    passport.use('local', new LocalStrategy({passReqToCallback : true},
 
-        process.nextTick(function() {
+        function(req, username, password, done){
+            
+            UserSchemaUtils.findUserByUsername(username, function(err, user){
 
-            // check if there exists a user with the same email
-            User.findOne({ 'username' :  email }, function(err, user) {
-
-                // if there are any errors, return the error
-                if (err)
-                    return done(err);
-
-                if (user) {
-                    console.log("Found user with same email!");
-                    console.log(user);
-                    return done(null, false, req.flash('SignUpFailed', 'That email is already taken.'));
-                } else {
-                    // create new user
-                    var newUser = new User();
-                    newUser.username   = email;
-                    newUser.password   = password;
-                    // newUser.password = Encrypter.encrypt(password);
-
-                    // save the user
-                    newUser.save(function(err) {
-                        if (err)
-                            throw err;
-                        console.log("User created succesfully!");
-                        return done(null, newUser);
-                    });
+                if(err){
+                    return done(null, false,  req.flash('LoginFailed', 'Something went wrong!'));
                 }
-            });
 
-        });
+                if(!user){
+                    return done(null, false,  req.flash('LoginFailed', 'Username does not exist!'));
+                }
+                
+                if(user.comparePassword(password, user.password)){
+                    return done(null, user);
+                }
 
-    }));
-
+                return done(null, false,  req.flash('LoginFailed', 'Invalid passsword!'));        
+            })
+    }))
 };
