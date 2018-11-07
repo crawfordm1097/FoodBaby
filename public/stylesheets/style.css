@@ -10,3 +10,8 @@ body {
 #nav, a:hover {
   text-decoration: none;
 }
+
+.mapboxgl-popup-content {
+    max-height: 200px;
+    overflow-y: auto;
+}
