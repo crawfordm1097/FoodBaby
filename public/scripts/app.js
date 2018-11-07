@@ -1,9 +1,12 @@
-var app = angular.module('foodBaby', []);
+var app = angular.module('foodBaby', ['ngRoute']);
+
 
 app.controller('ListingsCtrl', ($scope, $http) => {
+  $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
+
   $http.get('/api/listings').then((response) => {
-      $scope.listings = response.data;
-      generateMarkers();
+    $scope.listings = response.data;
+    $scope.listingsLoaded = true;
   }, (error) => {
     console.log('Unable to retrieve listings: ', error);
   });
@@ -17,60 +20,139 @@ app.controller('ListingsCtrl', ($scope, $http) => {
   $scope.view = function(id) {
     window.location = `/api/listings/id/${id}`;
   }
+});
 
-  /* Generates geojson data from the next 20 upcoming events. If events are held at the same location, the objects are merged. 
-  */
-  function generateMarkers() {
-      var recentevents = $scope.listings.slice(0, 20);
-      var geojson, index = 0; //Track indeces of unique locations
-      var fts = [];
-      var eventMap = new Map();
+app.config(function($routeProvider) {
 
-      //create feature json for each event
-      for (var i = 0; i < recentevents.length; i++) {
-          var curr = eventMap.get(recentevents[i].location.code);
-          var event = { //Unique event info
-              title: recentevents[i].name,
-              food_type: recentevents[i].food_type,
-              time: {
-                  start: new Date(recentevents[i].time.start).toLocaleString(), //Prettify dates
-                  end: new Date(recentevents[i].time.end).toLocaleString()
-              }
-          };
-
-          if (curr == undefined) { //First
-              eventMap.set(recentevents[i].location.code, index); //Add to map
-              fts[index] = { //Add initial object
-                  type: 'feature',
-                  geometry: {
-                      type: 'Point',
-                      coordinates: [recentevents[i].location.coordinates.longitude, recentevents[i].location.coordinates.latitude]
-                  },
-                  properties: {
-                      events: [], //Holds all unique event info for each event at location
-                      location: {
-                          name: recentevents[i].location.name,
-                          code: recentevents[i].location.code
-                      }
-                  }
-              }
-
-              fts[index].properties.events.push(event);
-
-              index++;
-          } else { //Duplicate
-              fts[curr].properties.events.push(event);
-          }
-      }
-
-      //create geojson
-      geojson = {
-          type: 'featurecollection',
-          features: fts
-      };
-
-      createMarker(geojson); //Call create marker (defined in mapbox.js)
-  }
+  $routeProvider
+    .when('/', {
+      templateUrl : '../main.html',
+      controller  : 'ListingsCtrl'
+    })
+    .when('/signup', {
+      templateUrl : '../signup.html',
+      controller  : 'LoginController'  // TO DO
+    })
+    .when('/login', {
+      templateUrl : '../login.html',
+      controller  : 'LoginController'
+    })
 
 });
 
+app.controller('LoginController',  function($scope, $http){
+
+  $scope.login = function(){
+      $http.post('/login/auth', $scope.user).then((response) => { // on success
+        console.log("Successful login");
+        console.log(user);
+      }, (error) =>{
+        console.log(error);
+      });
+  };
+
+});
+
+app.controller('SignUpController',  function($scope, $http){
+
+  $scope.login = function(){
+      $http.post('/login/auth', $scope.user).then((response) => { // on success
+        console.log("Successful login");
+        console.log(user);
+      }, (error) =>{
+        console.log(error);
+      });
+  };
+
+});
+
+app.directive("mapbox", function() {
+  return {
+      restrict: 'E',
+      replace: true,
+      template: "<div class='col-lg-12' id='map' style='width: 100%; height: 80%;'></div>",
+      link: function ($scope) {
+          mapboxgl.accessToken = 'pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw';
+          var map = new mapboxgl.Map({
+              container: 'map',
+              style: 'mapbox://styles/mapbox/streets-v10',
+              center: [-82.35256285341353, 29.641654178244437],
+              zoom: 13.6868419678297,
+              minZoom: 13
+          });
+
+          /* Generates geojson data from the next 20 upcoming events. If events are held at the same location, the objects are merged. */
+          (function generateMarkers() {
+              var recentevents = $scope.listings.slice(0, 20);
+              var geojson, index = 0; //track indeces of unique locations
+              var fts = [];
+              var eventmap = new Map();
+
+              //create feature json for each event
+              for (var i = 0; i < recentevents.length; i++) {
+                  var curr = eventmap.get(recentevents[i].location.code);
+                  var event = { //unique event info
+                      title: recentevents[i].name,
+                      food_type: recentevents[i].food_type,
+                      time: {
+                          start: new Date(recentevents[i].time.start).toLocaleString(), //prettify dates
+                          end: new Date(recentevents[i].time.end).toLocaleString()
+                      }
+                  };
+
+                  if (curr == undefined) { //first
+                      eventmap.set(recentevents[i].location.code, index); //add to map
+                      fts[index] = { //add initial object
+                          type: 'feature',
+                          geometry: {
+                              type: 'point',
+                              coordinates: [recentevents[i].location.coordinates.longitude, recentevents[i].location.coordinates.latitude]
+                          },
+                          properties: {
+                              events: [], //holds all unique event info for each event at location
+                              location: {
+                                  name: recentevents[i].location.name,
+                                  code: recentevents[i].location.code
+                              }
+                          }
+                      }
+
+                      fts[index].properties.events.push(event);
+
+                      index++;
+                  } else { //duplicate
+                      fts[curr].properties.events.push(event);
+                  }
+              }
+
+              //create geojson
+              geojson = {
+                  type: 'featurecollection',
+                  features: fts
+              };
+
+              createMarker(geojson);
+          })();
+
+          /* Adds markers to the map for every feature within geojson object.*/
+          function createMarker(geojson) {
+              geojson.features.forEach(function (marker) {
+                  var html = '';
+
+                  marker.properties.events.forEach(function (event) { //Create list of event info
+                      html += '<h3>' + event.title + '</h3><p><b>' + marker.properties.location.name + ' (' + marker.properties.location.code + ')</b></p><p>'
+                                  + event.time.start + ' - ' + event.time.end + '</p><p>'
+                                  + event.food_type + '</p>'
+                  });
+
+                  new mapboxgl.Marker({ color: "000000" })
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(new mapboxgl.Popup({ offset: 25 }) //add popups
+                    .setHTML(html))
+                    .addTo(map);
+              });
+          }
+      }
+  }
+
+})
