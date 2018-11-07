@@ -24,20 +24,14 @@ userSchema.pre('save', function(next) {
     return next();
   }
 
-  bcrypt.hash(user.username, 8, function(err, hash) {
+  bcrypt.hash(user.password, 8, function(err, hash) {
     user.password = hash;
     next();
   });
 });
 
-userSchema.methods.comparePassword = function(cp, next) {
-  bcrypt.compare(cp, this.password, function(err, good) {
-    if (err) {
-      return next(err);
-    }
-
-    next(null, good);
-  });
+userSchema.methods.comparePassword = function(password, hash) {
+  return bcrypt.compareSync(password, hash);
 };
 
 var User = mongoose.model('User', userSchema);
