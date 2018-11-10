@@ -6,15 +6,15 @@ exports.create = function(req, res) {
   users.findOne({ username: req.body.username }, (err, entry) => {
     if (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(500).send(err);
     } else if (entry) {
       console.log(err);
-      res.status(400).send("Username already exists");
+      res.status(200).send("Username already exists");
     } else {
       user.save((err) => {
         if (err) {
           console.log(err);
-          res.status(400).send(err);
+          res.status(500).send(err);
         } else {
           res.send(user);
         }
