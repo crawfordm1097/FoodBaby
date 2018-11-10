@@ -19,20 +19,19 @@ module.exports = function(passport){
         });
     });
 
-    passport.use('local', new LocalStrategy({passReqToCallback : true},
-
+    passport.use(new LocalStrategy({passReqToCallback : true},
+        
         function(req, username, password, done){
-            
             UserSchemaUtils.findUserByUsername(username, function(err, user){
 
                 if(err){
-                    return done(null, false,  req.flash('LoginFailed', 'Something went wrong!'));
-                }
-
-                if(!user){
-                    return done(null, false,  req.flash('LoginFailed', 'Username does not exist!'));
+                    return done(null, false, req.flash('LoginFailed', 'Something went wrong!'));
                 }
                 
+                if(!user){
+                    return done(null, false, req.flash('LoginFailed', 'Username does not exist!'));
+                }
+
                 if(user.comparePassword(password, user.password)){
                     return done(null, user);
                 }
