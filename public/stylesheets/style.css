@@ -10,3 +10,9 @@ body {
 #nav, a:hover {
   text-decoration: none;
 }
+
+
+#loginForm, #singupForm{
+  margin: 4px;
+  width:50%;
+}
