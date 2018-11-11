@@ -31,46 +31,57 @@ app.config(function($routeProvider) {
     })
     .when('/signup', {
       templateUrl : '../signup.html',
-      controller  : 'LoginController'  // TO DO
+      controller  : 'SignUpController'
     })
     .when('/login', {
       templateUrl : '../login.html',
       controller  : 'LoginController'
     })
+    .when('/profile', {
+      templateUrl : '../profile.html',
+      controller  : 'ProfileController'
+    })
 
 });
 
-app.controller('LoginController',  function($scope, $http){
+app.controller('LoginController',  function($scope, $location, $http){
+
 
   $scope.login = function(){
-      $http.post('/login/auth', $scope.user).then((response) => { // on success
-        console.log("Successful login");
-        console.log(user);
-      }, (error) =>{
-        console.log(error);
-      });
+    console.log("Attempting Login");
+
+    $scope.hasLoginFailed = false; // flag for error message when login fails
+
+    $http({
+
+      method:"POST",
+      url:'/user/login',
+      data:{username:$scope.username,password:$scope.password},
+
+    }).success(function(response){
+
+      $scope.userData = response;
+      console.log("Login successful!");
+      $location.path("/profile");
+
+    }).error(function(response){
+
+      console.log("Login Failed!");
+      $scope.hasLoginFailed = true;
+      $location.path("/login");
+
+    });
+
   };
 
 });
 
-app.controller('SignUpController',  function($scope, $http){
-
-  $scope.login = function(){
-      $http.post('/login/auth', $scope.user).then((response) => { // on success
-        console.log("Successful login");
-        console.log(user);
-      }, (error) =>{
-        console.log(error);
-      });
-  };
-
-});
 
 app.directive("mapbox", function() {
   return {
       restrict: 'E',
       replace: true,
-      template: "<div class='col-lg-12' id='map' style='width: 100%; height: 80%;'></div>",
+      template: "<div id='map' style='width: 100%; height: 100%;'></div>",
       link: function ($scope) {
           mapboxgl.accessToken = 'pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw';
           var map = new mapboxgl.Map({
