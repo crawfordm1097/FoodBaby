@@ -55,6 +55,16 @@ describe('Listing', function() {
           done();
         });
     });
+    it('should fail without required attributes', function(done) {
+      chai.request(server)
+        .post('/api/listings')
+        .send({ name: 'test' })
+        .end(function(err, res) {
+          res.should.have.status(400);
+
+          done();
+        });
+    });
 
     describe('/PUT listing', function() {
       it('should update the created listing', function(done) {
