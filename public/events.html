@@ -1,10 +1,10 @@
 <div class="event-tab">
     <ul class="nav nav-tabs" ng-init="includePast=false">
-        <li class="nav-item active">
+        <li class="nav-item">
             <div class="nav-link" data-toggle="tab" ng-click="listingsSort='time.end'; includePast=false">Upcoming Events</div>
         </li>
         <li class="nav-item">
-            <div class="nav-link" data-toggle="tab" ng-click="listingsSort='created_at'; includePast=false">Recent Events</div>
+            <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='created_at'; includePast=false">Recent Events</div>
         </li>
         <li class="nav-item">
             <div class="nav-link" data-toggle="tab" ng-click="listingsSort='meta.flagged'; includePast=false">Top Rated Events</div>
@@ -13,9 +13,13 @@
             <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-time.end'; includePast=true">Past Events</div>
         </li>
 
-        <div class="input-group" id="search-bar">
-            <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
-            <input type="text" class="form-control" placeholder="Search" ng-model="searchBy">
+        <div class="navbar-nav ml-auto">
+            <div class="input-group">
+                <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search" ng-model="searchBy">
+                <span class="input-group-append">
+                    <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                </span>
+            </div>
         </div>
     </ul>
 
