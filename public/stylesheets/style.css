@@ -21,6 +21,38 @@ body {
     overflow-y: auto;
 }
 
+.event-tab .nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.event-tab .nav-tabs .nav-item {
+    margin-bottom: -1px;
+}
+
+.event-tab .nav-tabs .nav-item .nav-link {
+    display: block;
+    padding: 1.5rem 1rem;
+    border: 1px solid transparent;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.event-tab .nav-tabs .nav-item .nav-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.event-tab tbody {
+    max-height: 400px;
+    display: block;
+    overflow-y: scroll;
+}
+
+.event-tab table > tbody > tr:nth-child(1) > th, table > tbody > tr:nth-child(1) > td {
+    border-top: none;
+}
+
 #loginForm, #singupForm{
   margin: 4px;
   width:50%;

@@ -37,6 +37,10 @@ app.config(function($routeProvider) {
       templateUrl : '../login.html',
       controller  : 'LoginController'
     })
+    .when('/events', {
+        templateUrl : '../events.html',
+        controller : 'EventsController'
+    })
     .when('/profile', {
       templateUrl : '../profile.html',
       controller  : 'ProfileController'
@@ -76,6 +80,17 @@ app.controller('LoginController',  function($scope, $location, $http){
 
 });
 
+app.controller('EventsController', function ($scope, $http) {
+    $scope.sortByOccurence = function (listing, includePast) {
+            var now = new Date();
+            var curr = new Date(listing.time.end);
+
+            if ((includePast && curr < now) || (!includePast && curr > now)) {
+                return listing;
+            }
+    }
+
+});
 
 app.directive("mapbox", function() {
   return {
