@@ -25,3 +25,21 @@ body {
   margin: 4px;
   width:50%;
 }
+
+.header {
+	padding: 30px;
+	text-align: center;
+	background: #0021A575;
+	font-size: 20px;
+}
+
+.footer {
+	padding: 30px;
+	text-align: right;
+	background: #FA461675;
+	font-size: 20px;
+}
+
+.container {
+	padding: 15px;
+}
