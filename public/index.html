@@ -12,13 +12,14 @@
 
   <body ng-app="foodBaby" ng-controller="ListingsCtrl">
     <!-- Header for the page -->
-    <nav id = "header">
-      <h1><a href="#/">Food Baby</a></h1>
+    <div class = "header">
       <!-- Login button -->
       <!-- For linking pages '#' is used -->
-      <a href ="#signup"> Sign up </a>
+      <a href ="#"> Main Page </a>
+	  <a href ="#events"> Events </a>
+	  <a href ="#signup"> Sign Up </a>
       <a href ="#login"> Login </a>
-    </nav>
+    </div>
 
     <div class ="container">
       <!-- Views will be injected in this div -->
@@ -26,9 +27,10 @@
     </div>
 
     <!-- Footer for the page -->
-    <div id = "footer">
-      <h1>Footer // TO DO</h1>
-    </div>
+    <div class = "footer">
+	  <a href ="https://twitter.com/UFfoodbaby"> Twitter </a>
+      <a href ="https://cen3031group2.weebly.com/"> Blog </a>
+	</div>
 
     <script src="/scripts/app.js"></script>
   </body>
