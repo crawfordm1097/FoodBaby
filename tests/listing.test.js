@@ -75,6 +75,20 @@ describe('Listing', function() {
       });
     });
 
+    describe('/GET specific listing', function() {
+      it('should get the created and updated listing', function(done) {
+        chai.request(server)
+          .get('/api/listings/id/' + lId)
+          .end(function(err, res) {
+            res.should.have.status(200);
+            res.body.should.be.an('object');
+            res.body.should.have.property('name').eql('updated test');
+
+            done();
+          });
+      });
+    });
+
     describe('/DELETE listing', function() {
       it('should delete the created listing', function(done) {
         chai.request(server)
