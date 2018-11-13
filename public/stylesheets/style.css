@@ -4,7 +4,6 @@ html, body {
 }
 
 body {
-  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -74,25 +73,25 @@ body {
     margin: -1rem auto -1rem auto !important;
 }
 
+
 #loginForm, #singupForm{
-  margin: 4px;
   width:50%;
+  margin: 10px;
 }
 
 .header {
-	/*padding: 30px;*/
-	/* text-align: center;*/
 	background: #0021A575;
-	/*font-size: 20px;*/
 }
 
-.footer {
-	padding: 30px;
-	text-align: right;
-	background: #FA461675;
-	font-size: 20px;
+footer {
+    background: #FA461675;
+    width: 100%;
+    position:fixed;
+    left:0px;
+    bottom:0px;
 }
 
 .container {
 	padding: 15px;
 }
+
