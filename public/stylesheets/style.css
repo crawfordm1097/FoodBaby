@@ -4,7 +4,7 @@ html, body {
 }
 
 body {
-  padding: 50px;
+  /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -59,10 +59,10 @@ body {
 }
 
 .header {
-	padding: 30px;
-	text-align: center;
+	/*padding: 30px;*/
+	/* text-align: center;*/
 	background: #0021A575;
-	font-size: 20px;
+	/*font-size: 20px;*/
 }
 
 .footer {
