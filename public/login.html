@@ -1,8 +1,11 @@
-<div id = "formContainer">
+<div class="d-flex justify-content-center" id = "formContainer">
   <form id= "loginForm" name="loginForm" ng-controller="LoginController">
     <div class="card">
+        <div class="card-header">
+            Login
+        </div>
+
       <div class="card-body">
-        <h2>FoodBaby Login</h2>
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" ng-model = "username" ng-required = "true"/>

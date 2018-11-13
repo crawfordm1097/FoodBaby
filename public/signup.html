@@ -1,9 +1,11 @@
 <!-- Sign up Component -->
-<div id = "singupContainer">
+<div class="d-flex justify-content-center" id = "singupContainer">
   <form id = "singupForm" name="signupForm" ng-controller="SignUpController">
     <div class="card">
+        <div class="card-header">
+            Signup
+        </div>
       <div class="card-body">
-        <h2>FoodBaby Signup</h2>
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" ng-model = "username" ng-required = "true"/>
