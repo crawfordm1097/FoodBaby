@@ -4,7 +4,8 @@ html, body {
 }
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-family: "Open Sans", "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 #add-btn {
@@ -93,5 +94,9 @@ footer {
 
 .container {
 	padding: 15px;
+}
+
+.header, footer{
+    font-size: 16px;
 }
 
