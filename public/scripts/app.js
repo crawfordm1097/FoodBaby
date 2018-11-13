@@ -1,7 +1,6 @@
-var app = angular.module('foodBaby', ['ngRoute']);
+var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
-
-app.controller('ListingsCtrl', ($scope, $http) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
 
   $http.get('/api/listings').then((response) => {
@@ -17,8 +16,40 @@ app.controller('ListingsCtrl', ($scope, $http) => {
     console.log('Unable to retrieve listings: ', error);
   });
 
+  $http.get('/api/locations').then((response) => {
+    $scope.locations = response.data;
+  }, (error) => {
+    console.log('Unable to retrieve locations: ', error);
+  });
+
   $scope.view = function(id) {
     window.location = `/api/listings/id/${id}`;
+  }
+
+  $scope.checkForUser = function () {
+      if ($rootScope.userData == undefined) {
+          $location.path('/login');
+      }
+  }
+
+  $scope.addEvent = function () {
+      var event = {
+          name: $scope.newEvent.name,
+          time: {
+              start: new Date($scope.newEvent.date.getTime() + $scope.newEvent.startTime.getTime()),
+              end: new Date($scope.newEvent.date.getTime() + $scope.newEvent.endTime.getTime())
+          },
+          location: $scope.newEvent.location._id,
+          posted_by: $scope.userData._id,
+          food_type: $scope.newEvent.foodType
+      }
+
+      $http.post('/listings', event).then((response) => {
+          console.log('Posted');
+          $('#add-event').modal('hide');
+      }, (error) => {
+          console.log('Unable to add event: ', error);
+      })
   }
 });
 
@@ -48,7 +79,7 @@ app.config(function($routeProvider) {
 
 });
 
-app.controller('LoginController',  function($scope, $location, $http){
+app.controller('LoginController',  function($scope, $rootScope, $location, $http){
 
 
   $scope.login = function(){
@@ -64,7 +95,7 @@ app.controller('LoginController',  function($scope, $location, $http){
 
     }).success(function(response){
 
-      $scope.userData = response;
+      $rootScope.userData = response;
       console.log("Login successful!");
       $location.path("/profile");
 

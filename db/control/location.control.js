@@ -25,3 +25,15 @@ exports.init = function() {
     });
   });
 }
+
+exports.list = function(req, res) {
+    location.find({})
+    .exec((err, entries) => {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        } else {
+            res.json(entries);
+        }
+    });
+}

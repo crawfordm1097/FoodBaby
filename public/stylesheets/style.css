@@ -8,6 +8,10 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+#add-btn {
+    float: left;
+}
+
 #nav, a {
   color: #333;
 }
@@ -51,6 +55,10 @@ body {
 
 .event-tab table > tbody > tr:nth-child(1) > th, table > tbody > tr:nth-child(1) > td {
     border-top: none;
+}
+
+.md-datepicker-calendar-pane {
+    z-index: 1200
 }
 
 #loginForm, #singupForm{
