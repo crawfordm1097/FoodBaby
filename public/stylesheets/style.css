@@ -74,6 +74,9 @@ body {
     margin: -1rem auto -1rem auto !important;
 }
 
+.navbar-nav .input-group > input {
+    height: auto;
+}
 
 #loginForm, #singupForm{
   width:50%;

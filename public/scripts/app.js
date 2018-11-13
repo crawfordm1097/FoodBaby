@@ -33,13 +33,11 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   }
 
   $scope.addEvent = function () {
-      var offset = (new Date().getTimezoneOffset()) * 60 * 1000;
-
       var event = {
           name: $scope.newEvent.name,
           time: {
-              start: new Date($scope.newEvent.date.getTime() + $scope.newEvent.startTime.getTime() + offset),
-              end: new Date($scope.newEvent.date.getTime() + $scope.newEvent.endTime.getTime() + offset)
+              start: buildDate($scope.newEvent.date, $scope.newEvent.startTime),
+              end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
           },
           location: $scope.newEvent.location._id,
           posted_by: $scope.userData._id,
@@ -48,6 +46,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
 
       $http.post('/api/listings', event).then((response) => {
           $('#add-event').modal('hide');
+          $scope.newEvent = {}; //Reset newEvent
 
           $http.get('/api/listings').then((response) => { //Refresh listings
               $scope.listings = response.data;
@@ -73,13 +72,11 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   }
 
   $scope.updateEvent = function () {
-      var offset = (new Date().getTimezoneOffset()) * 60 * 1000;
-
       var event = {
           name: $rootScope.currEvent.name,
           time: {
-              start: new Date($rootScope.currEvent.date.getTime() + $rootScope.currEvent.startTime.getTime() + offset),
-              end: new Date($rootScope.currEvent.date.getTime() + $rootScope.currEvent.endTime.getTime() + offset)
+              start: buildDate($scope.currEvent.date, $scope.currEvent.startTime),
+              end: buildDate($scope.currEvent.date, $scope.currEvent.endTime)
           },
           location: $rootScope.currEvent.location._id,
           food_type: $rootScope.currEvent.foodType
@@ -96,6 +93,10 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
       }, (error) => {
           console.log('Unable to update event: ', error);
       });
+  }
+
+  function buildDate(date, time) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
 });
 
@@ -160,7 +161,7 @@ app.controller('LoginController',  function($scope, $rootScope, $location, $http
 
       $rootScope.userData = response;
       console.log("Login successful!");
-      $location.path("/profile");
+      $location.path("/events");
 
     }).error(function(response){
 
@@ -189,7 +190,7 @@ app.controller('EventsController', function ($scope, $rootScope, $http) {
     $scope.setEvent = function (event) {
         $rootScope.currEvent = {
             name: event.name,
-            date: event.time.start,
+            date: new Date(event.time.start),
             startTime: new Date(event.time.start),
             endTime: new Date(event.time.end),
             location: event.location.name,
