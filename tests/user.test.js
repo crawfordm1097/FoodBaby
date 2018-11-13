@@ -41,7 +41,7 @@ describe('User', function() {
         .post('/api/user/register')
         .send(user)
         .end(function(err, res) {
-          res.should.have.status(200);
+          res.should.have.status(401);
           res.body.should.be.eql({});
           res.text.should.be.a('string').eql('Username already exists');
 

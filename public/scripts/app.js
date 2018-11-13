@@ -48,6 +48,23 @@ app.config(function($routeProvider) {
 
 });
 
+app.controller('SignUpController', function($scope, $location, $http) {
+  $scope.signup = function() {
+    $scope.usernameExists = false;
+    $http({
+      method: "POST",
+      url: '/api/user/register',
+      data: {username:$scope.username, password:$scope.password}
+    }).success(function(res) {
+      $location.path('/login');
+    }).error(function(res) {
+      console.log(res);
+      $scope.usernameExists = true;
+      $location.path('/signup');
+    });
+  }
+});
+
 app.controller('LoginController',  function($scope, $location, $http){
 
 
