@@ -1,131 +1,136 @@
 <html>
 
 <head>
-  <title>Food Baby</title>
-  <!-- Bootstrap -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Food Baby</title>
+    <!-- Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-  <!-- MapBox -->
-  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
-  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel="stylesheet" />
+    <!-- MapBox -->
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css" rel="stylesheet" />
 
-  <!-- Angular -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-aria.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-messages.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.5/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
 
-  <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
 <body ng-app="foodBaby" ng-controller="ListingsCtrl">
-  <!-- Header for the page -->
-  <div class = "header">
-    <!-- Login button -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href ="#/">FOODBABY</a>
+    <!-- Header for the page -->
+    <div class="header">
+        <!-- Login button -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#/">FOODBABY</a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#events">Events</a>
-          </li>
-        </ul>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#events">Events</a>
+                    </li>
+                </ul>
 
-        <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
 
-          <li class="nav-item">
-            <a class="nav-link" href ="#signup">
-              <i class="fa fa-user"></i>
-              <!--<span class="glyphicon glyphicon-user">
-            </span> -->Sign Up</a>
-          </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#signup">
+                            <i class="fa fa-user"></i>
+                            <!--<span class="glyphicon glyphicon-user">
+                            </span> -->
+                            Sign Up
+                        </a>
+                    </li>
 
 
 
-          <li class="nav-item">
-            <a class="nav-link" href ="#login">
-              <i class="fa fa-sign-in"></i>
-              <!--<span class="glyphicon glyphicon-log-in">
-            </span>--> Login</a>
-          </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#login">
+                            <i class="fa fa-sign-in"></i>
+                            <!--<span class="glyphicon glyphicon-log-in">
+                            </span>-->
+                            Login
+                        </a>
+                    </li>
 
-        </ul>
+                </ul>
 
-      </div>
-    </nav>
+            </div>
+        </nav>
 
-  </div>
-
-  <div class ="container">
-    <!-- Views will be injected in this div -->
-    <div ng-view></div>
-
-    <!-- Add Event Popup -->
-    <div class="modal fade" role="dialog" id="add-event">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Please fill out the form to add an event.</h4>
-          </div>
-
-          <div class="modal-body">
-            <form name="add-listing-form" ng-submit="addEvent()">
-              <div class="form-group col-md-10">
-                <label>Name</label>
-                <input type="text" class="form-control" id="name-input" ng-model="newEvent.name" required>
-              </div>
-              <div class="form-group col-md-10">
-                <md-datepicker ng-model="newEvent.date" md-placeholder="Enter Date" required></md-datepicker>
-              </div>
-              <div class="form-group col-md-6">
-                <label>Start Time</label>
-                <input type="time" class="form-control" ng-model="newEvent.startTime" required>
-              </div>
-              <div class="form-group col-md-6">
-                <label>End Time</label>
-                <input type="time" class="form-control" ng-model="newEvent.endTime" required>
-              </div>
-              <div class="form-group col-md-10">
-                <label>Location</label>
-                <select class="form-control" ng-model="newEvent.location" ng-options="location.name for location in locations" required>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label>Food Offered</label>
-                <textarea type="text" class="form-control" ng-model="newEvent.foodType" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary" ng-disabled="add-event.$invalid">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
 
-  </div>
+    <div class="container">
+        <!-- Views will be injected in this div -->
+        <div ng-view></div>
 
-  <!-- Footer for the page -->
-  <footer>
-    <button type="button" class="btn btn-light" id="add-btn" data-toggle="{{userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">Add Event</button>
-    <ul>
-      <li><a href ="https://twitter.com/UFfoodbaby"> Twitter </a></li>
-      <li><a href ="https://cen3031group2.weebly.com/"> Blog </a></li>
-    </ul>
-  </footer>
+        <!-- Add Event Popup -->
+        <div class="modal fade" role="dialog" id="add-event">
+            <div class="modal-dialog">
+                <div class="modal-content">
 
-  <script src="/scripts/app.js"></script>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Please fill out the form to add an event.</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form name="add-listing-form" ng-submit="addEvent()">
+                            <div class="form-group col-md-10">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="name-input" ng-model="newEvent.name" required>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <md-datepicker ng-model="newEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Start Time</label>
+                                <input type="time" class="form-control" ng-model="newEvent.startTime" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>End Time</label>
+                                <input type="time" class="form-control" ng-model="newEvent.endTime" min="{{newEvent.startTime | date:'HH:mm:ss'}}" required>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label>Location</label>
+                                <select class="form-control" ng-model="newEvent.location" ng-options="location.name for location in locations" required>
+                                    <option style="display:none" value="">Select a location</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Food Offered</label>
+                                <textarea type="text" class="form-control" ng-model="newEvent.foodType" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="add-event.$invalid">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer for the page -->
+    <footer>
+        <button type="button" class="btn btn-light" id="add-btn" data-toggle="{{userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">Add Event</button>
+        <ul>
+            <li><a href="https://twitter.com/UFfoodbaby"> Twitter </a></li>
+            <li><a href="https://cen3031group2.weebly.com/"> Blog </a></li>
+        </ul>
+    </footer>
+
+    <script src="/scripts/app.js"></script>
 </body>
 
 </html>

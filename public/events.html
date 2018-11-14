@@ -23,7 +23,6 @@
         </div>
     </ul>
 
-
     <div class="tab-content">
         <div class="tablewrapper col-md-12">
             <table class="table table-hover">
@@ -63,7 +62,7 @@
                             <input type="text" class="form-control" id="name-input"ng-model="currEvent.name" required>
                         </div>
                         <div class="form-group col-md-10">
-                            <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" required></md-datepicker>
+                            <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Start Time</label>
@@ -71,11 +70,13 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>End Time</label>
-                            <input type="time" class="form-control" ng-model="currEvent.endTime" required>
+                            <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{currEvent.startTime | date:'HH:mm:ss'}}" required>
                         </div>
                         <div class="form-group col-md-10">
                             <label>Location</label>
-                            <select class="form-control" ng-options="location.name for location in locations" ng-model="currEvent.location" required></select>
+                            <select class="form-control" ng-options="location as location.name for location in locations" ng-model="currEvent.location" required>
+                                <option style="display:none" value="">Confirm the location</option>
+                            </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Food Offered</label>

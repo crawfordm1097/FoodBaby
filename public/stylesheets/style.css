@@ -20,6 +20,11 @@ body {
     overflow-y: auto;
 }
 
+.event-tab {
+    height: 100%;
+    overflow: auto
+}
+
 .event-tab .nav-tabs {
     border-bottom: 1px solid #dee2e6;
 }
@@ -42,12 +47,6 @@ body {
     border-color: #dee2e6 #dee2e6 #fff;
 }
 
-.event-tab tbody {
-    max-height: 400px;
-    display: block;
-    overflow-y: scroll;
-}
-
 .event-tab table > tbody > tr:nth-child(1) > th, table > tbody > tr:nth-child(1) > td {
     border-top: none;
 }
@@ -67,6 +66,10 @@ body {
 
 .modal-header .close {
     margin: -1rem auto -1rem auto !important;
+}
+
+.input-group {
+    padding: 10px;
 }
 
 .navbar-nav .input-group > input {

@@ -1,7 +1,8 @@
 var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
 app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
-  $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
+    $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
+    $scope.minDate = new Date();
 
   $http.get('/api/listings').then((response) => {
     $scope.listings = response.data;
@@ -29,33 +30,36 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   $scope.checkForUser = function () {
       if ($rootScope.userData == undefined) {
           $location.path('/login');
+      } else {
+          $scope.newEvent = {}; //Reset newEvent
       }
   }
 
   $scope.addEvent = function () {
-      var event = {
-          name: $scope.newEvent.name,
-          time: {
-              start: buildDate($scope.newEvent.date, $scope.newEvent.startTime),
-              end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
-          },
-          location: $scope.newEvent.location._id,
-          posted_by: $scope.userData._id,
-          food_type: $scope.newEvent.foodType
-      }
+      if ($scope.newEvent.startTime < $scope.newEvent.endTime) {
+          var event = {
+              name: $scope.newEvent.name,
+              time: {
+                  start: buildDate($scope.newEvent.date, $scope.newEvent.startTime),
+                  end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
+              },
+              location: $scope.newEvent.location._id,
+              posted_by: $scope.userData._id,
+              food_type: $scope.newEvent.foodType
+          }
 
-      $http.post('/api/listings', event).then((response) => {
-          $('#add-event').modal('hide');
-          $scope.newEvent = {}; //Reset newEvent
+          $http.post('/api/listings', event).then((response) => {
+              $('#add-event').modal('hide');
 
-          $http.get('/api/listings').then((response) => { //Refresh listings
-              $scope.listings = response.data;
+              $http.get('/api/listings').then((response) => { //Refresh listings
+                  $scope.listings = response.data;
+              }, (error) => {
+                  console.log('Unable to refresh listings: ', error);
+              });
           }, (error) => {
-              console.log('Unable to refresh listings: ', error);
-          });
-      }, (error) => {
-          console.log('Unable to add event: ',  error);
-      })
+              console.log('Unable to add event: ',  error);
+          })
+      }
   }
 
   $scope.deleteEvent = function (id) {
@@ -193,7 +197,7 @@ app.controller('EventsController', function ($scope, $rootScope, $http) {
             date: new Date(event.time.start),
             startTime: new Date(event.time.start),
             endTime: new Date(event.time.end),
-            location: event.location.name,
+            location: event.location,
             foodType: event.food_type,
             id: event._id
         }
