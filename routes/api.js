@@ -23,4 +23,7 @@ router.route('/listings/id/:listingId')
 router.route('/user/register')
   .post(db.users.create);
 
+router.route('/locations')
+  .get(db.locations.list);
+
 module.exports = router;

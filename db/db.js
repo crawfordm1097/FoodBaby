@@ -14,4 +14,8 @@ db.users = User;
 db.listings = Listing;
 db.locations = Location;
 
+db.close = function() {
+  mongoose.disconnect();
+};
+
 module.exports = db;

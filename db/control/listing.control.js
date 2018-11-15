@@ -30,11 +30,11 @@ exports.find = function(req, res) {
 }
 
 exports.update = function(req, res) {
-  let listing = req.listing;
+  let listing = req.params.listingId;
 
-  listings.findOneByIdAndUpdate(listing._id, req.body,
+  listings.findByIdAndUpdate(listing, req.body,
                                 {'new': true}, (err, entry) => {
-    if (err) {
+    if (err || !entry) {
       console.log(err);
       res.status(400).send(err);
     } else {
@@ -44,10 +44,10 @@ exports.update = function(req, res) {
 }
 
 exports.delete = function(req, res) {
-  let listing = req.listing;
+  let listing = req.params.listingId;
 
-  listings.deleteOne(listing, (err, entry) => {
-    if (err) {
+  listings.findByIdAndDelete(listing, (err, entry) => {
+    if (err || !entry) {
       console.log(err);
       res.status(400).send(err);
     } else {

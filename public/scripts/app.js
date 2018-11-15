@@ -1,8 +1,8 @@
-var app = angular.module('foodBaby', ['ngRoute']);
+var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
-
-app.controller('ListingsCtrl', ($scope, $http) => {
-  $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
+    $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
+    $scope.minDate = new Date();
 
   $http.get('/api/listings').then((response) => {
     $scope.listings = response.data;
@@ -17,8 +17,90 @@ app.controller('ListingsCtrl', ($scope, $http) => {
     console.log('Unable to retrieve listings: ', error);
   });
 
+  $http.get('/api/locations').then((response) => {
+    $scope.locations = response.data;
+  }, (error) => {
+    console.log('Unable to retrieve locations: ', error);
+  });
+
   $scope.view = function(id) {
     window.location = `/api/listings/id/${id}`;
+  }
+
+  $scope.checkForUser = function () {
+      if ($rootScope.userData == undefined) {
+          $location.path('/login');
+      } else {
+          $scope.newEvent = {}; //Reset newEvent
+      }
+  }
+
+  $scope.addEvent = function () {
+      if ($scope.newEvent.startTime < $scope.newEvent.endTime) {
+          var event = {
+              name: $scope.newEvent.name,
+              time: {
+                  start: buildDate($scope.newEvent.date, $scope.newEvent.startTime),
+                  end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
+              },
+              location: $scope.newEvent.location._id,
+              posted_by: $scope.userData._id,
+              food_type: $scope.newEvent.foodType
+          }
+
+          $http.post('/api/listings', event).then((response) => {
+              $('#add-event').modal('hide');
+
+              $http.get('/api/listings').then((response) => { //Refresh listings
+                  $scope.listings = response.data;
+              }, (error) => {
+                  console.log('Unable to refresh listings: ', error);
+              });
+          }, (error) => {
+              console.log('Unable to add event: ',  error);
+          })
+      }
+  }
+
+  $scope.deleteEvent = function (id) {
+      $http.delete('/api/listings/id/' + id).then((response) => {
+          $http.get('/api/listings').then((response) => { //Refresh listings
+              $scope.listings = response.data;
+          }, (error) => {
+              console.log('Unable to refresh listings: ', error);
+          });
+
+      }, (error) => {
+          console.log('Unable to delete event: ', error);
+      })
+  }
+
+  $scope.updateEvent = function () {
+      var event = {
+          name: $rootScope.currEvent.name,
+          time: {
+              start: buildDate($scope.currEvent.date, $scope.currEvent.startTime),
+              end: buildDate($scope.currEvent.date, $scope.currEvent.endTime)
+          },
+          location: $rootScope.currEvent.location._id,
+          food_type: $rootScope.currEvent.foodType
+      }
+
+      $http.put('/api/listings/id/' + $rootScope.currEvent.id, event).then((response) => {
+          $('#update-event').modal('hide');
+
+          $http.get('/api/listings').then((response) => { //Refresh listings
+              $scope.listings = response.data;
+          }, (error) => {
+              console.log('Unable to refresh listings: ', error);
+          });
+      }, (error) => {
+          console.log('Unable to update event: ', error);
+      });
+  }
+
+  function buildDate(date, time) {
+      return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
 });
 
@@ -37,6 +119,10 @@ app.config(function($routeProvider) {
       templateUrl : '../login.html',
       controller  : 'LoginController'
     })
+    .when('/events', {
+        templateUrl : '../events.html',
+        controller : 'EventsController'
+    })
     .when('/profile', {
       templateUrl : '../profile.html',
       controller  : 'ProfileController'
@@ -44,7 +130,24 @@ app.config(function($routeProvider) {
 
 });
 
-app.controller('LoginController',  function($scope, $location, $http){
+app.controller('SignUpController', function($scope, $location, $http) {
+  $scope.signup = function() {
+    $scope.usernameExists = false;
+    $http({
+      method: "POST",
+      url: '/api/user/register',
+      data: {username:$scope.username, password:$scope.password}
+    }).success(function(res) {
+      $location.path('/login');
+    }).error(function(res) {
+      console.log(res);
+      $scope.usernameExists = true;
+      $location.path('/signup');
+    });
+  }
+});
+
+app.controller('LoginController',  function($scope, $rootScope, $location, $http){
 
 
   $scope.login = function(){
@@ -60,9 +163,9 @@ app.controller('LoginController',  function($scope, $location, $http){
 
     }).success(function(response){
 
-      $scope.userData = response;
+      $rootScope.userData = response;
       console.log("Login successful!");
-      $location.path("/profile");
+      $location.path("/events");
 
     }).error(function(response){
 
@@ -76,6 +179,30 @@ app.controller('LoginController',  function($scope, $location, $http){
 
 });
 
+app.controller('EventsController', function ($scope, $rootScope, $http) {
+    $rootScope.currEvent;
+
+    $scope.sortByOccurence = function (listing, includePast) {
+            var now = new Date();
+            var curr = new Date(listing.time.end);
+
+            if ((includePast && curr < now) || (!includePast && curr > now)) {
+                return listing;
+            }
+    }
+
+    $scope.setEvent = function (event) {
+        $rootScope.currEvent = {
+            name: event.name,
+            date: new Date(event.time.start),
+            startTime: new Date(event.time.start),
+            endTime: new Date(event.time.end),
+            location: event.location,
+            foodType: event.food_type,
+            id: event._id
+        }
+    }
+});
 
 app.directive("mapbox", function() {
   return {

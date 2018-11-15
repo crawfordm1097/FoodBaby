@@ -8,15 +8,14 @@ exports.create = function(req, res) {
       console.log(err);
       res.status(500).send(err);
     } else if (entry) {
-      console.log(err);
-      res.status(200).send("Username already exists");
+      res.status(401).send("Username already exists");
     } else {
-      user.save((err) => {
+      user.save(function(err) {
         if (err) {
           console.log(err);
           res.status(500).send(err);
         } else {
-          res.send(user);
+          res.status(200).send(user);
         }
       });
     }

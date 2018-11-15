@@ -20,6 +20,7 @@ var listingSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Location'
   },
+  room: String,
   posted_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
