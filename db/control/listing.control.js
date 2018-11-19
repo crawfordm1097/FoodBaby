@@ -85,3 +85,25 @@ exports.recent = function(req, res) {
     }
   });
 }
+
+
+exports.findByUser = function(username) {
+
+  let listingsPostedByUser = {};
+
+  listings.find({})
+    .populate('location')
+    .populate({
+      path: 'posted_by',
+      match: { 'username': username},
+    })
+    .exec((err, entry) => {
+      if (!err) {
+        listingsPostedByUser = entry;
+      }
+      console.log(err);
+      console.log(listingsPostedByUser);
+    });
+  
+  return listingsPostedByUser;
+}
