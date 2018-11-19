@@ -149,35 +149,42 @@ app.controller('SignUpController', function($scope, $location, $http) {
 
 app.controller('LoginController',  function($scope, $rootScope, $location, $http){
 
-
   $scope.login = function(){
-    console.log("Attempting Login");
-
     $scope.hasLoginFailed = false; // flag for error message when login fails
 
     $http({
-
       method:"POST",
       url:'/user/login',
       data:{username:$scope.username,password:$scope.password},
-
     }).success(function(response){
-
       $rootScope.userData = response;
-      console.log("Login successful!");
       $location.path("/events");
-
-    }).error(function(response){
-
-      console.log("Login Failed!");
+    }).error(function(){
       $scope.hasLoginFailed = true;
       $location.path("/login");
-
     });
-
   };
 
 });
+
+
+app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
+    // profile route is protected, we verify if the user is already logged in or not
+    $scope.getProfile = function(){
+      $http({
+        method:"GET",
+        url:'/user/profile',
+      }).success(function(res){
+        console.log("User verified!");
+        console.log(res);
+        $scope.userListings = res;
+        $location.path("/profile");
+      }).error(function(res){
+        console.log("User not logged in!");
+        $location.path("/login");
+      });
+    };
+});  
 
 app.controller('EventsController', function ($scope, $rootScope, $http) {
     $rootScope.currEvent;
