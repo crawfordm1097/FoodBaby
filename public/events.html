@@ -8,7 +8,7 @@
                 <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-created_at'; includePast=false; scrollUp()">Recent Events</div>
             </li>
             <li class="nav-item">
-                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='meta.flagged'; includePast=false; scrollUp()">Top Rated Events</div>
+                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='meta.up'; includePast=false; scrollUp()">Top Rated Events</div>
             </li>
             <li class="nav-item">
                 <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-time.end'; includePast=true; scrollUp()">Past Events</div>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>End Time</label>
-                            <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{checkValidTime(minDate, currEvent.startTime) | date:'HH:mm'}}" required>
+                            <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{checkValidTime(minDate, currEvent.startTime, currEvent.date) | date:'HH:mm'}}" required>
                         </div>
                         <div class="form-group col-md-10">
                             <label>Location</label>

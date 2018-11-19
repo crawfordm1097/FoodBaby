@@ -31,7 +31,9 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval)
       if ($rootScope.userData == undefined) {
           $location.path('/login');
       } else {
-          $scope.newEvent = {}; //Reset newEvent
+          $scope.newEvent = {  //Reset newEvent
+              date: $scope.minDate,
+          };
       }
   }
 
@@ -97,11 +99,12 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval)
       });
   }
 
-  $scope.checkValidTime = function (minDate, startTime) {
-      if (minDate != undefined && startTime != undefined) {
+  $scope.checkValidTime = function (minDate, startTime, date) {
+      if (minDate != undefined && startTime != undefined && date != undefined) {
           var minute = 1000 * 60;
+          var start = buildDate(date, startTime);
 
-          return (minDate > startTime ? new Date(minDate.getTime() + minute) : new Date(startTime.getTime() + minute));
+          return (minDate > start ? new Date(minDate.getTime() + minute) : new Date(start.getTime() + minute));
       }
   }
 
