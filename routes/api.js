@@ -26,4 +26,7 @@ router.route('/user/register')
 router.route('/locations')
   .get(db.locations.list);
 
+router.route('/listings/:userId')
+    .get(db.listings.findByUser);
+
 module.exports = router;
