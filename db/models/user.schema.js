@@ -11,10 +11,6 @@ var userSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },
-  meta: {
-    postings: Number,
-    karma: Number,
   }
 });
 
