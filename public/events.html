@@ -1,34 +1,36 @@
 <div class="event-tab">
-    <ul class="nav nav-tabs" ng-init="includePast=false">
-        <li class="nav-item">
-            <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='time.end'; includePast=false">Upcoming Events</div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-created_at'; includePast=false">Recent Events</div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link" data-toggle="tab" ng-click="listingsSort='meta.flagged'; includePast=false">Top Rated Events</div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-time.end'; includePast=true">Past Events</div>
-        </li>
+    <div class="nav-container">
+        <ul class="nav nav-tabs" ng-init="includePast=false">
+            <li class="nav-item">
+                <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='time.end'; includePast=false; scrollUp()">Upcoming Events</div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-created_at'; includePast=false; scrollUp()">Recent Events</div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='meta.up'; includePast=false; scrollUp()">Top Rated Events</div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-time.end'; includePast=true; scrollUp()">Past Events</div>
+            </li>
 
-        <div class="navbar-nav ml-auto">
-            <div class="input-group">
-                <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search" ng-model="searchBy">
-                <span class="input-group-append">
-                    <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-                </span>
+            <div class="navbar-nav ml-auto">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search" ng-model="searchBy">
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                    </span>
+                </div>
             </div>
-        </div>
-    </ul>
+        </ul>
+    </div>
 
     <div class="tab-content">
         <div class="tablewrapper col-md-12">
             <table class="table table-hover">
                 <tr ng-repeat="listing in listings | orderBy:listingsSort | filter:searchBy" ng-if="sortByOccurence(listing, includePast)">
                     <td>
-                        <img ng-src='https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s+000000({{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}})/{{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}},10,0.00,0.00/150x100?access_token=pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw'>
+                        <img ng-src='https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s+000000({{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}})/{{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}},12,0.00,0.00/200x150?access_token=pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw'>
                     </td>
                     <td>
                         <div>
@@ -85,17 +87,15 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>End Time</label>
-                            <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{currEvent.startTime | date:'HH:mm:ss'}}" required>
+                            <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{checkValidTime(minDate, currEvent.startTime, currEvent.date) | date:'HH:mm'}}" required>
                         </div>
                         <div class="form-group col-md-10">
                             <label>Location</label>
-                            <select class="form-control" ng-options="location as location.name for location in locations" ng-model="currEvent.location" required>
-                                <option style="display:none" value="">Confirm the location</option>
-                            </select>
+                            <select class="form-control" ng-options="location as location.name for location in locations | orderBy: 'name' track by location.code" ng-model="currEvent.location"></select>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Food Offered</label>
-                            <textarea type="text" class="form-control" ng-model="currEvent.foodType" required></textarea>
+                            <textarea type="text" maxlength="50" class="form-control" ng-model="currEvent.foodType" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-disabled="update-event.$invalid">Submit</button>
                     </form>
