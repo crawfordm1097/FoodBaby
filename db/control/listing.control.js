@@ -87,23 +87,24 @@ exports.recent = function(req, res) {
 }
 
 
-exports.findByUser = function(username) {
-
-  let listingsPostedByUser = {};
-
-  listings.find({})
-    .populate('location')
-    .populate({
-      path: 'posted_by',
-      match: { 'username': username},
-    })
-    .exec((err, entry) => {
-      if (!err) {
-        listingsPostedByUser = entry;
-      }
-      console.log(err);
-      console.log(listingsPostedByUser);
-    });
+exports.findByUser = function(req, res) {
   
-  return listingsPostedByUser;
+  if(req.isAuthenticated()){
+    listings.find({})
+      .populate('location')
+      .populate({
+        path: 'posted_by',
+        match: { 'username': req.user.username},
+      })
+      .exec((err, entries) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          res.json(entries);
+        }
+      });
+  }else{
+    res.status(401).send();
+  }
+  
 }
