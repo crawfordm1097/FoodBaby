@@ -1,6 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var listings = require('../db/control/listing.control.js');
+var express = require('express'),
+    listings = require('../db/control/listing.control.js'),
+    user = require('../db/control/user.control.js'),
+    router = express.Router();
+
 
 login = function(app, passport){
     app.post('/user/login', 
@@ -21,24 +23,27 @@ login = function(app, passport){
     );
 };
 
-isLoggedIn = function(req, res, next) {
-    console.log("Verifying if user is logged in...");
-    if (req.isAuthenticated())
-        return next();
+router.put('/upasswd', function(req, res){
 
-    res.status(401).send();
-};
+    if(req.user && req.user.comparePassword(req.body.oldPassword, req.user.password)){
+        if(user.updatePassword(req.user.username, req.body.newPassword)){
+            res.status(200).send();
+        }else{
+            res.status(503).send();
+        }
+    }else{
+        res.status(401).send();
+    }
+});
 
-router.get('/profile', isLoggedIn, function(req, res){
-    console.log(req.user.username);
-    let listingsPosteByUser = listings.findByUser(req.user.username);
-    res.json(listingsPosteByUser);
+app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
 });
 
 module.exports = {
     login,
     router,
-    isLoggedIn,
 };
 
 
