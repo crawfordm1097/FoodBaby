@@ -102,6 +102,23 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   function buildDate(date, time) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
+
+   // profile route is protected, we verify if the user is already logged in or not
+   $scope.getProfile = function(){
+    $http({
+      method:"GET",
+      url:'/api/listings/user',
+    }).success(function(response){
+      console.log("User verified!");
+      console.log(response);
+      $rootScope.userListings = response;
+      $location.path("/profile");
+    }).error(function(response){
+      console.log("User not logged in!");
+      $location.path("/login");
+    });
+  };
+
 });
 
 app.config(function($routeProvider) {
@@ -126,6 +143,10 @@ app.config(function($routeProvider) {
     .when('/profile', {
       templateUrl : '../profile.html',
       controller  : 'ProfileController'
+    })
+    .when('/account', {
+        templateUrl : '../account.html',
+        controller  : 'PasswordController'
     })
 
 });
@@ -167,24 +188,70 @@ app.controller('LoginController',  function($scope, $rootScope, $location, $http
 
 });
 
+app.controller('PasswordController', function($scope, $rootScope, $location, $http) {
+    $scope.passwordMatches = true;
+    $scope.validOldPassword = true;
+    $scope.account = {};
+
+    $scope.matchPassword = function() {
+        $scope.passwordMatches = $scope.account.newPassword == $scope.account.confirmNewPassword;
+        console.log($scope.passwordMatches);
+        return $scope.passwordMatches;
+    };
+
+    $scope.changePassword = function() {
+      $http({
+        method:"PUT",
+        url:'/user/upasswd',
+        data:{oldPassword:$scope.account.oldPassword,newPassword:$scope.account.newPassword},
+      }).success(function(res) {
+        $location.path('/account');
+      }).error(function(res) {
+        $scope.passwordMatches = true;
+        $scope.validOldPassword = false;
+        $location.path('/account');
+      });
+    }
+});
 
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
     // profile route is protected, we verify if the user is already logged in or not
-    $scope.getProfile = function(){
+    /*$scope.getProfile = function(){
       $http({
         method:"GET",
-        url:'/user/profile',
-      }).success(function(res){
+        url:'/api/listings/user',
+      }).success(function(response){
         console.log("User verified!");
-        console.log(res);
-        $scope.userListings = res;
+        console.log(response);
+        $rootScope.userListings = response;
         $location.path("/profile");
-      }).error(function(res){
+      }).error(function(response){
         console.log("User not logged in!");
         $location.path("/login");
       });
-    };
-});  
+    };*/
+
+    $scope.sortByOccurence = function (listing, includePast) {
+        var now = new Date();
+        var curr = new Date(listing.time.end);
+
+        if ((includePast && curr < now) || (!includePast && curr > now)) {
+            return listing;
+        }
+    }
+
+    $scope.setEvent = function (event) {
+    $rootScope.currEvent = {
+        name: event.name,
+        date: new Date(event.time.start),
+        startTime: new Date(event.time.start),
+        endTime: new Date(event.time.end),
+        location: event.location,
+        foodType: event.food_type,
+        id: event._id
+    }
+}
+});
 
 app.controller('EventsController', function ($scope, $rootScope, $http) {
     $rootScope.currEvent;
