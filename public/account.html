@@ -31,8 +31,9 @@
               Password must be between 8 to 12 characters!
           </div>
   
-          <button type="submit" class="btn btn-primary" ng-disabled= "!passwordChangeForm.$valid" ng-click="matchPassword() && changePassword()" >Change Password</button>
+          <button type="submit" class="btn btn-primary btn-block" ng-disabled= "!passwordChangeForm.$valid" ng-click="matchPassword() && changePassword()" >Change Password</button>
           
+          <br>
           <div class="alert alert-success" role="alert" ng-show="passwordChanged">
               Password updated!
           </div>
