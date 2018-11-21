@@ -76,7 +76,7 @@ body {
     height: auto;
 }
 
-#loginForm, #singupForm{
+#login-form, #password-change-form, #singupForm{
   width:50%;
   margin: 10px;
 }
@@ -123,3 +123,15 @@ footer ul li a {
 	height: 30px;
 }
 
+.profile-card{
+    width: 25%;
+    height: 50%;
+}
+
+.profile-event-tab{
+    width: 75%;
+}
+
+.change-password-form{
+    width: 50%;
+}
