@@ -36,9 +36,9 @@ router.put('/upasswd', function(req, res){
     }
 });
 
-app.get('/logout', function(req, res){
+router.post('/logout', function(req, res){
     req.logout();
-    res.redirect('/');
+    res.status(200).send();
 });
 
 module.exports = {
