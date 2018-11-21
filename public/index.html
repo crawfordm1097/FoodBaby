@@ -43,27 +43,28 @@
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
-                    
-                    <li class="nav-item">
-                        <button class="nav-link" ng-controller = "ProfileController" ng-click = "getProfile()">
-                            <i class="fa fa-user"></i>
-                            Profile
-                        </button>
-                    </li>
+    
+                    <div ng-show="!loggedIn">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#login">
+                                <i class="fa fa-sign-in"></i>
+                                Login
+                            </a>
+                        </li>
+                    </div>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#signup">
-                            <i class="fa fa-user"></i>
-                            Sign Up
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#login">
-                            <i class="fa fa-sign-in"></i>
-                            Login
-                        </a>
-                    </li>
+                    <div ng-show="loggedIn">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{userData.username}}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#" ng-click="getProfile()">Profile</a>
+                                    <a class="dropdown-item" href="#account">Change Password</a>
+                                    <button class="dropdown-item" ng-click="logout()">Log out</button>
+                                </div>
+                            </li>
+                    </div>
                 </ul>
             </div>
         </nav>
