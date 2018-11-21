@@ -77,8 +77,8 @@ body {
 }
 
 #login-form, #password-change-form, #singupForm{
-  width:50%;
-  margin: 10px;
+  width:40%;
+  margin-top: 5%;
 }
 
 .header {
