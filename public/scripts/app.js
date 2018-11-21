@@ -2,6 +2,7 @@ var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
 app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
+    $rootScope.loggedIn = false;
     $scope.minDate = new Date();
 
   $http.get('/api/listings').then((response) => {
@@ -119,6 +120,18 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
     });
   };
 
+  $scope.logout = function(){
+    $http({
+        method:"POST",
+        url:'/user/logout',
+    }).success(function(response){
+        $rootScope.loggedIn = false;
+        $location.path("/");
+    }).error(function(response){
+        $location.path("/");
+    });
+  };
+
 });
 
 app.config(function($routeProvider) {
@@ -179,6 +192,7 @@ app.controller('LoginController',  function($scope, $rootScope, $location, $http
       data:{username:$scope.username,password:$scope.password},
     }).success(function(response){
       $rootScope.userData = response;
+      $rootScope.loggedIn = true;
       $location.path("/events");
     }).error(function(){
       $scope.hasLoginFailed = true;
@@ -191,6 +205,7 @@ app.controller('LoginController',  function($scope, $rootScope, $location, $http
 app.controller('PasswordController', function($scope, $rootScope, $location, $http) {
     $scope.passwordMatches = true;
     $scope.validOldPassword = true;
+    $scope.passwordChanged = false;
     $scope.account = {};
 
     $scope.matchPassword = function() {
@@ -205,7 +220,10 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
         url:'/user/upasswd',
         data:{oldPassword:$scope.account.oldPassword,newPassword:$scope.account.newPassword},
       }).success(function(res) {
-        $location.path('/account');
+        $scope.account.oldPassword = "";
+        $scope.account.newPassword = "";
+        $scope.account.confirmNewPassword = "";
+        $scope.passwordChanged = true;
       }).error(function(res) {
         $scope.passwordMatches = true;
         $scope.validOldPassword = false;
@@ -215,22 +233,6 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 });
 
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
-    // profile route is protected, we verify if the user is already logged in or not
-    /*$scope.getProfile = function(){
-      $http({
-        method:"GET",
-        url:'/api/listings/user',
-      }).success(function(response){
-        console.log("User verified!");
-        console.log(response);
-        $rootScope.userListings = response;
-        $location.path("/profile");
-      }).error(function(response){
-        console.log("User not logged in!");
-        $location.path("/login");
-      });
-    };*/
-
     $scope.sortByOccurence = function (listing, includePast) {
         var now = new Date();
         var curr = new Date(listing.time.end);
