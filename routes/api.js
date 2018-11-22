@@ -20,6 +20,9 @@ router.route('/listings/id/:listingId')
   .put(db.listings.update)
   .delete(db.listings.delete);
 
+router.route('/listings/user/:userId')
+  .get(db.listings.getKarma);
+
 router.route('/user/register')
   .post(db.users.create);
 
