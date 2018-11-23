@@ -28,6 +28,11 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
     window.location = `/api/listings/id/${id}`;
   }
 
+  $scope.$on('$routeChangeStart', function(event, route) {
+      if (route.requireAuth && !$rootScope.loggedIn)    // verify if user is authorized to access the route
+            $location.path("/login");
+  });
+
   $scope.checkForUser = function () {
       if ($rootScope.userData == undefined) {
           $location.path('/login');
@@ -104,27 +109,29 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
 
+  $scope.verifyUser = function(){
+    $http.get('/user/verify').success(function(response){
+        console.log(response.data);
+        $rootScope.loggedIn = response.data != undefined;
+        $rootScope.userData = response.data;
+    }).error(function() {
+        $rootScope.loggedIn = false;
+        $rootScope.userData = undefined;
+    });
+  };
+  
    // profile route is protected, we verify if the user is already logged in or not
    $scope.getProfile = function(){
-    $http({
-      method:"GET",
-      url:'/api/listings/user',
-    }).success(function(response){
-      console.log("User verified!");
-      console.log(response);
+    $http.get('/api/listings/user').success(function(response){
       $rootScope.userListings = response;
       $location.path("/profile");
-    }).error(function(response){
-      console.log("User not logged in!");
+    }).error(function(){
       $location.path("/login");
     });
   };
 
   $scope.logout = function(){
-    $http({
-        method:"POST",
-        url:'/user/logout',
-    }).success(function(response){
+    $http.post('/user/logout').success(function(response){
         $rootScope.loggedIn = false;
         $location.path("/");
     }).error(function(response){
@@ -155,23 +162,20 @@ app.config(function($routeProvider) {
     })
     .when('/profile', {
       templateUrl : '../profile.html',
-      controller  : 'ProfileController'
+      controller  : 'ProfileController',
+      requireAuth : true,
     })
     .when('/account', {
         templateUrl : '../account.html',
-        controller  : 'PasswordController'
+        controller  : 'PasswordController',
+        requireAuth : true,
     })
-
 });
 
 app.controller('SignUpController', function($scope, $location, $http) {
   $scope.signup = function() {
     $scope.usernameExists = false;
-    $http({
-      method: "POST",
-      url: '/api/user/register',
-      data: {username:$scope.username, password:$scope.password}
-    }).success(function(res) {
+    $http.post('/api/user/register', {username:$scope.username, password:$scope.password}).success(function(res) {
       $location.path('/login');
     }).error(function(res) {
       console.log(res);
@@ -186,11 +190,7 @@ app.controller('LoginController',  function($scope, $rootScope, $location, $http
   $scope.login = function(){
     $scope.hasLoginFailed = false; // flag for error message when login fails
 
-    $http({
-      method:"POST",
-      url:'/user/login',
-      data:{username:$scope.username,password:$scope.password},
-    }).success(function(response){
+    $http.post('/user/login', {username:$scope.username,password:$scope.password}).success(function(response){
       $rootScope.userData = response;
       $rootScope.loggedIn = true;
       $location.path("/events");
@@ -215,11 +215,7 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
     };
 
     $scope.changePassword = function() {
-      $http({
-        method:"PUT",
-        url:'/user/upasswd',
-        data:{oldPassword:$scope.account.oldPassword,newPassword:$scope.account.newPassword},
-      }).success(function(res) {
+      $http.put('/user/upasswd',{oldPassword:$scope.account.oldPassword,newPassword:$scope.account.newPassword}).success(function(res) {
         $scope.account.oldPassword = "";
         $scope.account.newPassword = "";
         $scope.account.confirmNewPassword = "";
