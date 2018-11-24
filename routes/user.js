@@ -25,7 +25,7 @@ login = function(app, passport){
 
 router.put('/upasswd', function(req, res){
 
-    if(req.user && req.user.comparePassword(req.body.oldPassword, req.user.password)){
+    if(req.isAuthenticated() && req.user.comparePassword(req.body.oldPassword, req.user.password)){
         if(user.updatePassword(req.user.username, req.body.newPassword)){
             res.status(200).send();
         }else{
