@@ -1,9 +1,14 @@
-var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages']);
+var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngStorage']);
 
-app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $localStorage) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
-    $rootScope.loggedIn = false;
     $scope.minDate = new Date();
+
+    /* 
+        userdata is stored persistently in localstorage.
+        $storage and $localstorage  are automatically synchronized.
+    */
+    $scope.$storage = $localStorage.$default({ userData: undefined,});
 
   $http.get('/api/listings').then((response) => {
     $scope.listings = response.data;
@@ -29,12 +34,12 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   }
 
   $scope.$on('$routeChangeStart', function(event, route) {
-      if (route.requireAuth && !$rootScope.loggedIn)    // verify if user is authorized to access the route
+      if (route.requireAuth && !$scope.$storage.userData)    // verify if user is authorized to access the route
             $location.path("/login");
   });
 
   $scope.checkForUser = function () {
-      if ($rootScope.userData == undefined) {
+      if ($scope.$storage.userData == undefined) {
           $location.path('/login');
       } else {
           $scope.newEvent = {}; //Reset newEvent
@@ -50,7 +55,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
                   end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
               },
               location: $scope.newEvent.location._id,
-              posted_by: $scope.userData._id,
+              posted_by: $scope.$storage.userData._id,
               food_type: $scope.newEvent.foodType
           }
 
@@ -108,19 +113,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
   function buildDate(date, time) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
-
-  $scope.verifyUser = function(){
-    $http.get('/user/verify').success(function(response){
-        console.log(response.data);
-        $rootScope.loggedIn = response.data != undefined;
-        $rootScope.userData = response.data;
-    }).error(function() {
-        $rootScope.loggedIn = false;
-        $rootScope.userData = undefined;
-    });
-  };
   
-   // profile route is protected, we verify if the user is already logged in or not
    $scope.getProfile = function(){
     $http.get('/api/listings/user').success(function(response){
       $rootScope.userListings = response;
@@ -132,7 +125,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location) => {
 
   $scope.logout = function(){
     $http.post('/user/logout').success(function(response){
-        $rootScope.loggedIn = false;
+        $localStorage.$reset();
         $location.path("/");
     }).error(function(response){
         $location.path("/");
@@ -191,8 +184,7 @@ app.controller('LoginController',  function($scope, $rootScope, $location, $http
     $scope.hasLoginFailed = false; // flag for error message when login fails
 
     $http.post('/user/login', {username:$scope.username,password:$scope.password}).success(function(response){
-      $rootScope.userData = response;
-      $rootScope.loggedIn = true;
+      $scope.$storage.userData = response;
       $location.path("/events");
     }).error(function(){
       $scope.hasLoginFailed = true;
