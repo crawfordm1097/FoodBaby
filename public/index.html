@@ -19,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
 
     <link rel="stylesheet" href="/stylesheets/style.css">
@@ -44,7 +45,7 @@
 
                 <ul class="navbar-nav ml-auto">
     
-                    <div ng-show="!loggedIn">
+                    <div ng-show="!$storage.userData">
                         <li class="nav-item">
                             <a class="nav-link" href="#login">
                                 <i class="fa fa-sign-in"></i>
@@ -53,10 +54,10 @@
                         </li>
                     </div>
 
-                    <div ng-show="loggedIn">
+                    <div ng-show="$storage.userData">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{userData.username}}
+                                    {{$storage.userData.username}}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="#" ng-click="getProfile()">Profile</a>
@@ -123,7 +124,7 @@
 
     <!-- Footer for the page -->
     <footer>
-        <button type="button" class="btn btn-light" id="add-btn" data-toggle="{{userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">Add Event</button>
+        <button type="button" class="btn btn-light" id="add-btn" data-toggle="{{$storage.userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">Add Event</button>
         <ul>
             <li><a href="https://twitter.com/UFfoodbaby"><img class = "social-media-logo" src="images/twitter_logo.png"/></a></li>
             <li><a href="https://cen3031group2.weebly.com/"><img class = "social-media-logo" src="images/weebly_logo.png"/></a></li>
