@@ -160,6 +160,12 @@ app.controller('SignUpController', function($scope, $location, $http) {
       $location.path('/signup');
     });
   }
+  $scope.matchingPasswords = function() {
+    return $scope.password === $scope.cpass;
+  }
+  $scope.validEmail = function() {
+    return $scope.username;
+  }
 });
 
 app.controller('LoginController',  function($scope, $rootScope, $location, $http){
