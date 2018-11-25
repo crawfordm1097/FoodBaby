@@ -20,18 +20,15 @@ var listingSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Location'
   },
-  room: String,
   posted_by: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  room: String,
+  info: String,
   food_type: String,
   meta: {
-    up: {
-      type: Number,
-      default: 0
-    },
-    down: {
+    score: {
       type: Number,
       default: 0
     },
@@ -41,7 +38,8 @@ var listingSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  updated_at: Date
+  updated_at: Date,
+  twitter_id: String
 });
 
 listingSchema.pre('save', function(next) {
