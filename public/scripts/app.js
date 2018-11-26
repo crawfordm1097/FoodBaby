@@ -4,7 +4,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
     $scope.minDate = new Date();
 
-    /* 
+    /*
         userdata is stored persistently in localstorage.
         $storage and $localstorage  are automatically synchronized.
     */
@@ -128,7 +128,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
   function buildDate(date, time) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
-  
+
    $scope.getProfile = function(){
     $http.get('/api/listings/user').success(function(response){
       $rootScope.userListings = response;
@@ -236,6 +236,12 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 });
 
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
+  $scope.score = 0;
+  $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
+    console.log(res);
+    $scope.score = res.data[0].count;
+  });
+
     $scope.sortByOccurence = function (listing, includePast) {
         var now = new Date();
         var curr = new Date(listing.time.end);

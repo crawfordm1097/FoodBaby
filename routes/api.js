@@ -20,7 +20,7 @@ router.route('/listings/id/:listingId')
   .put(db.listings.update)
   .delete(db.listings.delete);
 
-router.route('/listings/user/:userId')
+router.route('/user/karma/:userId')
   .get(db.listings.getKarma);
 
 router.route('/user/register')

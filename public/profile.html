@@ -7,9 +7,9 @@
         </div>
         <img class="card-img-top" src="/images/default_profile_img.png"/>
         <div class="card-body">
-            Email : {{$storage.userData.username}}
+            Email: {{$storage.userData.username}}
             <br>
-            Score: {{$storage.userData.score}}
+            Score: {{ score }}
             <br>
         </div>
     </div>
@@ -21,7 +21,7 @@
             <li class="nav-item">
                 <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='time.end'; includePast=true">My Events</div>
             </li>
-    
+
             <div class="navbar-nav ml-auto">
                 <div class="input-group">
                     <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search" ng-model="searchBy">
@@ -48,37 +48,37 @@
                                 {{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}<br>
                                 {{listing.food_type}}
                             </div>
-    
-    
+
+
                             <!--UI for event meta info: upvotes and flags-->
                             <div class = "event-meta mt-4 mb-2">
                                 <button type="button" class="mr-2 btn btn-outline-primary btn-sm">
                                     <i class="fa fa-arrow-up"></i>
-                                    <span class = "m-2">{{listing.meta.up}}</span>
+                                    <span class = "m-2">{{listing.meta.score}}</span>
                                 </button>
-    
+
                                 <button type="button" class="btn btn btn-outline-danger btn-sm">
                                     <i class="fa fa-flag"></i>
                                     <span class = "m-2">{{listing.meta.flagged}}</span>
                                 </button>
                             </div>
-    
+
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-    
+
         <!-- Update Event Popup -->
         <div class="modal fade" role="dialog" id="update-event">
             <div class="modal-dialog">
                 <div class="modal-content">
-    
+
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Please fill out the form to add your updates.</h4>
                     </div>
-    
+
                     <div class="modal-body">
                         <form name="update-listing-form" ng-submit="updateEvent()">
                             <div class="form-group col-md-10">
