@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center" id = "formContainer">
-  <form id= "loginForm" name="loginForm" ng-controller="LoginController">
+  <form id="login-form" name="loginForm" ng-controller="LoginController">
     <div class="card">
         <div class="card-header">
             Login
@@ -20,7 +20,10 @@
             Invalid username and/or password!
         </div>
 
-        <button type="submit" class="btn btn-primary" ng-disabled= "!loginForm.$valid" ng-click="login()" >Login</button>
+        <button type="submit" class="btn btn-primary btn-block" ng-disabled= "!loginForm.$valid" ng-click="login()" >Login</button>
+        <br>
+        <p class="text-center"> Don't have an account? <a class="text-primary" href=#signup> Sign up here! </a> </p>
+        
       </div>
     </div>
   </form>

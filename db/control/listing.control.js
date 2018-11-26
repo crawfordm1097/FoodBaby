@@ -85,3 +85,26 @@ exports.recent = function(req, res) {
     }
   });
 }
+
+
+exports.findByUser = function(req, res) {
+  
+  if(req.isAuthenticated()){
+    listings.find({})
+      .populate('location')
+      .populate({
+        path: 'posted_by',
+        match: { 'username': req.user.username},
+      })
+      .exec((err, entries) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          res.json(entries);
+        }
+      });
+  }else{
+    res.status(401).send();
+  }
+  
+}

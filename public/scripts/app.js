@@ -1,8 +1,14 @@
-var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages']);
+var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngStorage']);
 
-app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval, $localStorage) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
     $scope.minDate = new Date();
+
+    /* 
+        userdata is stored persistently in localstorage.
+        $storage and $localstorage  are automatically synchronized.
+    */
+    $scope.$storage = $localStorage.$default({ userData: undefined,});
 
   $http.get('/api/listings').then((response) => {
     $rootScope.listings = response.data;
@@ -27,8 +33,13 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval)
     window.location = `/api/listings/id/${id}`;
   }
 
+  $scope.$on('$routeChangeStart', function(event, route) {
+      if (route.requireAuth && !$scope.$storage.userData)    // verify if user is authorized to access the route
+            $location.path("/login");
+  });
+
   $scope.checkForUser = function () {
-      if ($rootScope.userData == undefined) {
+      if ($scope.$storage.userData == undefined) {
           $location.path('/login');
       } else {
           $scope.newEvent = {  //Reset newEvent
@@ -117,6 +128,25 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval)
   function buildDate(date, time) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
+  
+   $scope.getProfile = function(){
+    $http.get('/api/listings/user').success(function(response){
+      $rootScope.userListings = response;
+      $location.path("/profile");
+    }).error(function(){
+      $location.path("/login");
+    });
+  };
+
+  $scope.logout = function(){
+    $http.post('/user/logout').success(function(response){
+        $localStorage.$reset();
+        $location.path("/");
+    }).error(function(response){
+        $location.path("/");
+    });
+  };
+
 });
 
 app.config(function($routeProvider) {
@@ -140,19 +170,20 @@ app.config(function($routeProvider) {
     })
     .when('/profile', {
       templateUrl : '../profile.html',
-      controller  : 'ProfileController'
+      controller  : 'ProfileController',
+      requireAuth : true,
     })
-
+    .when('/account', {
+        templateUrl : '../account.html',
+        controller  : 'PasswordController',
+        requireAuth : true,
+    })
 });
 
 app.controller('SignUpController', function($scope, $location, $http) {
   $scope.signup = function() {
     $scope.usernameExists = false;
-    $http({
-      method: "POST",
-      url: '/api/user/register',
-      data: {username:$scope.username, password:$scope.password}
-    }).success(function(res) {
+    $http.post('/api/user/register', {username:$scope.username, password:$scope.password}).success(function(res) {
       $location.path('/login');
     }).error(function(res) {
       console.log(res);
@@ -164,34 +195,67 @@ app.controller('SignUpController', function($scope, $location, $http) {
 
 app.controller('LoginController',  function($scope, $rootScope, $location, $http){
 
-
   $scope.login = function(){
-    console.log("Attempting Login");
-
     $scope.hasLoginFailed = false; // flag for error message when login fails
 
-    $http({
-
-      method:"POST",
-      url:'/user/login',
-      data:{username:$scope.username,password:$scope.password},
-
-    }).success(function(response){
-
-      $rootScope.userData = response;
-      console.log("Login successful!");
+    $http.post('/user/login', {username:$scope.username,password:$scope.password}).success(function(response){
+      $scope.$storage.userData = response;
       $location.path("/events");
-
-    }).error(function(response){
-
-      console.log("Login Failed!");
+    }).error(function(){
       $scope.hasLoginFailed = true;
       $location.path("/login");
-
     });
-
   };
 
+});
+
+app.controller('PasswordController', function($scope, $rootScope, $location, $http) {
+    $scope.passwordMatches = true;
+    $scope.validOldPassword = true;
+    $scope.passwordChanged = false;
+    $scope.account = {};
+
+    $scope.matchPassword = function() {
+        $scope.passwordMatches = $scope.account.newPassword == $scope.account.confirmNewPassword;
+        console.log($scope.passwordMatches);
+        return $scope.passwordMatches;
+    };
+
+    $scope.changePassword = function() {
+      $http.put('/user/upasswd',{oldPassword:$scope.account.oldPassword,newPassword:$scope.account.newPassword}).success(function(res) {
+        $scope.account.oldPassword = "";
+        $scope.account.newPassword = "";
+        $scope.account.confirmNewPassword = "";
+        $scope.passwordChanged = true;
+      }).error(function(res) {
+        $scope.passwordMatches = true;
+        $scope.validOldPassword = false;
+        $location.path('/account');
+      });
+    }
+});
+
+app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
+    $scope.sortByOccurence = function (listing, includePast) {
+        var now = new Date();
+        var curr = new Date(listing.time.end);
+
+        if ((includePast && curr < now) || (!includePast && curr > now)) {
+            return listing;
+        }
+    }
+
+    $scope.setEvent = function (event) {
+    $rootScope.currEvent = {
+        name: event.name,
+        date: new Date(event.time.start),
+        startTime: new Date(event.time.start),
+        endTime: new Date(event.time.end),
+        location: event.location,
+        foodType: event.food_type,
+        id: event._id
+    }
+}
 });
 
 app.controller('EventsController', function ($scope, $rootScope, $http) {

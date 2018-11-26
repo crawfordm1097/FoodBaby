@@ -6,15 +6,12 @@ var User = require('../db/models/user.schema.js');
 module.exports = function(passport){
 
     /**  Serializing and deserializing user for persistent login **/
-
-    // Serialze save username (as it is a key) to the session
     passport.serializeUser(function(user, done) {
-        done(null, user.username);   // save to session as req.session.passsport.user = {username: 'username'}
+        done(null, user.username);
     });
 
-    // Deserialize uses the value (key) stored in the session to retrieve the user object and assign it to req.user
     passport.deserializeUser(function(username, done) {
-        User.findOne({'username': username}, function(err, user) {
+        UserSchemaUtils.findUserByUsername(username, function(err, user) {
             done(err, user);
         });
     });
