@@ -23,7 +23,6 @@ exports.create = function(req, res) {
   });
 }
 
-
 exports.findUserByUsername = function(username, callback) {
   users.findOne({ 'username' : username}, callback);
 }
