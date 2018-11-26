@@ -8,7 +8,7 @@
                 <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-created_at'; includePast=false; scrollUp()">Recent Events</div>
             </li>
             <li class="nav-item">
-                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='meta.up'; includePast=false; scrollUp()">Top Rated Events</div>
+                <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-meta.score'; includePast=false; scrollUp()">Top Rated Events</div>
             </li>
             <li class="nav-item">
                 <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-time.end'; includePast=true; scrollUp()">Past Events</div>
@@ -35,8 +35,8 @@
                     <td>
                         <div>
                             <b>{{listing.name}}</b>
-                            <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === userData._id"></button>
-                            <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === userData._id"></button>
+                            <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
+                            <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
                             <br><br>
                             {{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}<br>
                             {{listing.food_type}}

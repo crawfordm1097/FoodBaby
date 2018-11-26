@@ -1,4 +1,5 @@
-const listings = require('../models/listing.schema.js');
+const listings = require('../models/listing.schema.js'),
+      ObjectId = require('mongoose').Types.ObjectId;
 
 exports.create = function(req, res) {
   let listing = new listings(req.body);
@@ -84,4 +85,53 @@ exports.recent = function(req, res) {
       res.json(entry);
     }
   });
+}
+
+exports.findByUser = function(req, res) {
+
+  if(req.isAuthenticated()){
+    listings.find({})
+      .populate('location')
+      .populate({
+        path: 'posted_by',
+        match: { 'username': req.user.username},
+      })
+      .exec((err, entries) => {
+        if (err) {
+          res.status(400).send(err);
+        } else {
+          res.json(entries);
+        }
+      });
+  }else{
+    res.status(401).send();
+  }
+
+}
+
+/*
+ * Return the total karma of a poster
+ */
+exports.getKarma = function(req, res) {
+  let u_id = new ObjectId(req.params.userId);
+
+  listings.aggregate([
+    {
+      $match: {
+        "posted_by": u_id
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        count: {$sum: "$meta.score"}
+      }
+    }
+  ], function(err, result) {
+    if (err) {
+      next(err);
+    } else {
+      res.json(result);
+    }
+  })
 }
