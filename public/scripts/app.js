@@ -248,16 +248,7 @@ app.controller('ProfileController',  function($scope, $rootScope, $location, $ht
     $scope.score = res.data[0].count;
   });
 
-    $scope.sortByOccurence = function (listing, includePast) {
-        var now = new Date();
-        var curr = new Date(listing.time.end);
-
-        if ((includePast && curr < now) || (!includePast && curr > now)) {
-            return listing;
-        }
-    }
-
-    $scope.setEvent = function (event) {
+ $scope.setEvent = function (event) {
     $rootScope.currEvent = {
         name: event.name,
         date: new Date(event.time.start),
