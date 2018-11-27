@@ -2,7 +2,7 @@
     <div class="nav-container">
         <ul class="nav nav-tabs" ng-init="includePast=false">
             <li class="nav-item">
-                <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='time.end'; includePast=false; scrollUp()">Upcoming</div>
+                <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='time.start'; includePast=false; scrollUp()">Upcoming</div>
             </li>
             <li class="nav-item">
                 <div class="nav-link" data-toggle="tab" ng-click="listingsSort='-created_at'; includePast=false; scrollUp()">Recently Added</div>
@@ -38,10 +38,10 @@
                             <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
                             <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
                             <br><br>
-                            {{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}<br>
-                            {{listing.food_type}}
+                            <span ng-if="listing.room">{{listing.room}} </span>{{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}
+                            <br><br>{{listing.food_type}}
+                            <span ng-if="listing.info"><br><br>{{listing.info}}</span>
                         </div>
-
 
                         <!--UI for event meta info: upvotes and flags-->
                         <div class = "event-meta mt-4 mb-2">
@@ -74,28 +74,51 @@
 
                 <div class="modal-body">
                     <form name="update-listing-form" ng-submit="updateEvent()">
-                        <div class="form-group col-md-10">
-                            <label>Name</label>
-                            <input type="text" class="form-control" id="name-input"ng-model="currEvent.name" required>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="name-input" ng-model="currEvent.name" required>
+                            </div>
                         </div>
-                        <div class="form-group col-md-10">
-                            <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                        <div class="row">
+                            <div class="form-group col">
+                                <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Start Time</label>
-                            <input type="time" class="form-control" ng-model="currEvent.startTime" required>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label>Start Time</label>
+                                <input type="time" class="form-control" ng-model="currEvent.startTime" required>
+                            </div>
+                            <div class="form-group col">
+                                <label>End Time</label>
+                                <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{checkValidTime(minDate, currEvent.startTime, currEvent.date) | date:'HH:mm'}}" required>
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>End Time</label>
-                            <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{checkValidTime(minDate, currEvent.startTime, currEvent.date) | date:'HH:mm'}}" required>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label>Location</label>
+                                <select class="form-control"ng-options="location as location.name for location in locations | orderBy: 'name' track by location.code" ng-model="currEvent.location" required>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Room Number</label>
+                                <input type="text" maxlength="50" class="form-control" ng-model="currEvent.roomNum">
+                                <small class="form-text text-muted">Optional</small>
+                            </div>
                         </div>
-                        <div class="form-group col-md-10">
-                            <label>Location</label>
-                            <select class="form-control" ng-options="location as location.name for location in locations | orderBy: 'name' track by location.code" ng-model="currEvent.location"></select>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label>Food Offered</label>
+                                <textarea type="text" maxlength="50" class="form-control" ng-model="currEvent.foodType" required></textarea>
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Food Offered</label>
-                            <textarea type="text" maxlength="50" class="form-control" ng-model="currEvent.foodType" required></textarea>
+                        <div class="row">
+                            <div class="form-group col">
+                                <label>Event Description</label>
+                                <textarea type="text" maxlength="100" class="form-control" ng-model="currEvent.info"></textarea>
+                                <small class="form-text text-muted">Optional</small>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary" ng-disabled="update-event.$invalid">Submit</button>
                     </form>

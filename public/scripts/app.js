@@ -57,6 +57,8 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
           },
           location: $scope.newEvent.location._id,
           posted_by: $scope.$storage.userData._id,
+          room: $scope.newEvent.roomNum,
+          info: $scope.newEvent.info,
           food_type: $scope.newEvent.foodType
       }
 
@@ -94,7 +96,9 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
               end: buildDate($scope.currEvent.date, $scope.currEvent.endTime)
           },
           location: $rootScope.currEvent.location._id,
-          food_type: $rootScope.currEvent.foodType
+          room: $rootScope.currEvent.roomNum,
+          food_type: $rootScope.currEvent.foodType,
+          info: $rootScope.currEvent.info
       }
 
       $http.put('/api/listings/id/' + $rootScope.currEvent.id, event).then((response) => {
@@ -289,7 +293,9 @@ app.controller('EventsController', function ($scope, $rootScope, $http) {
             startTime: new Date(event.time.start),
             endTime: new Date(event.time.end),
             location: event.location,
+            roomNum: event.room,
             foodType: event.food_type,
+            info: event.info,
             id: event._id
         }
     }
@@ -334,7 +340,9 @@ app.directive('mapbox', function() {
                               time: {
                                   start: new Date(recentevents[i].time.start).toLocaleString(), //prettify dates
                                   end: new Date(recentevents[i].time.end).toLocaleString()
-                              }
+                              },
+                              info: recentevents[i].info,
+                              room: recentevents[i].room
                           };
 
                           if (curr == undefined) { //first
@@ -377,10 +385,10 @@ app.directive('mapbox', function() {
                   geojson.features.forEach(function (marker) {
                       var html = '';
 
-                      marker.properties.events.forEach(function (event) { //Create list of event info
-                          html += '<h3>' + event.title + '</h3><p><b>' + marker.properties.location.name + ' (' + marker.properties.location.code + ')</b></p><p>'
+                      marker.properties.events.forEach(function(event) { //Create list of event info
+                          html += '<h3>' + event.title + '</h3><p><b>' + (event.room == undefined ? '' : event.room + ' ') + marker.properties.location.name + ' (' + marker.properties.location.code + ')</b></p><p>'
                                       + event.time.start + ' - ' + event.time.end + '</p><p>'
-                                      + event.food_type + '</p>'
+                                      + event.food_type + '</p>' + (event.info == undefined ? '' : '<p>' + event.info + '</p>')
                       });
 
                       new mapboxgl.Marker({ color: "000000" })
