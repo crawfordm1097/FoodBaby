@@ -1,1 +1,116 @@
-<h1> Welcome!</h1>
+ <div class="d-flex justify-content-start">
+
+     <!--User Profile-->
+    <div class= "card m-4 profile-card">
+        <div class="card-header">
+            Profile
+        </div>
+        <img class="card-img-top" src="/images/default_profile_img.png"/>
+        <div class="card-body">
+            Email: {{$storage.userData.username}}
+            <br>
+            Score: {{ score }}
+            <br>
+        </div>
+    </div>
+
+    <!--My Events Tab-->
+    <div class="event-tab m-4 profile-event-tab">
+
+        <ul class="nav nav-tabs" ng-init="includePast=false">
+            <li class="nav-item">
+                <div class="nav-link active" data-toggle="tab" ng-click="listingsSort='time.end'; includePast=true">My Events</div>
+            </li>
+
+            <div class="navbar-nav ml-auto">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search" ng-model="searchBy">
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                    </span>
+                </div>
+            </div>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tablewrapper col-md-12">
+                <table class="table table-hover">
+                    <tr ng-repeat="listing in userListings | orderBy:listingsSort | filter:searchBy" ng-if="sortByOccurence(listing, includePast) && listing.posted_by != null">
+                        <td>
+                            <img ng-src='https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s+000000({{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}})/{{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}},10,0.00,0.00/150x100?access_token=pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw'>
+                        </td>
+                        <td>
+                            <div>
+                                <b>{{listing.name}}</b>
+                                <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
+                                <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
+                                <br><br>
+                                {{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}<br>
+                                {{listing.food_type}}
+                            </div>
+
+
+                            <!--UI for event meta info: upvotes and flags-->
+                            <div class = "event-meta mt-4 mb-2">
+                                <button type="button" class="mr-2 btn btn-outline-primary btn-sm">
+                                    <i class="fa fa-arrow-up"></i>
+                                    <span class = "m-2">{{listing.meta.score}}</span>
+                                </button>
+
+                                <button type="button" class="btn btn btn-outline-danger btn-sm">
+                                    <i class="fa fa-flag"></i>
+                                    <span class = "m-2">{{listing.meta.flagged}}</span>
+                                </button>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Update Event Popup -->
+        <div class="modal fade" role="dialog" id="update-event">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Please fill out the form to add your updates.</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <form name="update-listing-form" ng-submit="updateEvent()">
+                            <div class="form-group col-md-10">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="name-input"ng-model="currEvent.name" required>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Start Time</label>
+                                <input type="time" class="form-control" ng-model="currEvent.startTime" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>End Time</label>
+                                <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{currEvent.startTime | date:'HH:mm:ss'}}" required>
+                            </div>
+                            <div class="form-group col-md-10">
+                                <label>Location</label>
+                                <select class="form-control" ng-options="location as location.name for location in locations" ng-model="currEvent.location" required>
+                                    <option style="display:none" value="">Confirm the location</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Food Offered</label>
+                                <textarea type="text" class="form-control" ng-model="currEvent.foodType" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-disabled="update-event.$invalid">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

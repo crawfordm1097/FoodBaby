@@ -20,10 +20,16 @@ router.route('/listings/id/:listingId')
   .put(db.listings.update)
   .delete(db.listings.delete);
 
+router.route('/user/karma/:userId')
+  .get(db.listings.getKarma);
+
 router.route('/user/register')
   .post(db.users.create);
 
 router.route('/locations')
   .get(db.locations.list);
+
+router.route('/listings/user')
+    .get(db.listings.findByUser);
 
 module.exports = router;

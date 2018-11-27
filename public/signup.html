@@ -2,24 +2,39 @@
 <div class="d-flex justify-content-center" id = "singupContainer">
   <form id = "singupForm" name="signupForm" ng-controller="SignUpController">
     <div class="card">
-        <div class="card-header">
-            Signup
-        </div>
+      <div class="card-header">
+        Signup
+      </div>
       <div class="card-body">
         <div class="form-group">
           <label for="email">Email address</label>
-          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" ng-model = "username" ng-required = "true"/>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                 placeholder="Enter Email" ng-model="username" ng-required="true"/>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Password" ng-model = "password" ng-required = "true"/>
+          <input type="password" class="form-control" id="password"
+                 placeholder="Password" ng-model="password" ng-required="true"/>
+        </div>
+        <div class="form-group">
+          <label for="password">Confirm Password</label>
+          <input type="password" class="form-control" id="password"
+                 placeholder="Confirm Password"
+                 ng-model="cpass" ng-required="true"/>
         </div>
 
         <div class="alert alert-danger" role="alert" ng-show="usernameExists">
-            Username already exists!
+          Username already exists!
+        </div>
+        <div class="alert alert-danger" role="alert" ng-show="!matchingPasswords()">
+          Passwords must match!
+        </div>
+        <div class="alert alert-warning" role="alert" ng-show="!username">
+          Please enter a valid email!
         </div>
 
-        <button type="submit" class="btn btn-primary" ng-disabled= "!signupForm.$valid" ng-click="signup()" >Sign Up</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="!signupForm.$valid"
+                ng-click="signup()">Sign Up</button>
       </div>
     </div>
   </form>
