@@ -56,7 +56,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
               end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
           },
           location: $scope.newEvent.location._id,
-          posted_by: $scope.userData._id,
+          posted_by: $scope.$storage.userData._id,
           food_type: $scope.newEvent.foodType
       }
 
