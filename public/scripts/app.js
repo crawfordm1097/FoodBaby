@@ -223,7 +223,6 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 
     $scope.matchPassword = function() {
         $scope.passwordMatches = $scope.account.newPassword == $scope.account.confirmNewPassword;
-        console.log($scope.passwordMatches);
         return $scope.passwordMatches;
     };
 
@@ -261,7 +260,7 @@ app.controller('ProfileController',  function($scope, $rootScope, $location, $ht
 }
 });
 
-app.controller('EventsController', function ($scope, $rootScope, $http) {
+app.controller('EventsController', function ($scope, $rootScope,  $location, $http) {
     $rootScope.currEvent;
 
     $scope.sortByOccurence = function (listing, includePast) {
@@ -287,6 +286,19 @@ app.controller('EventsController', function ($scope, $rootScope, $http) {
 
     $scope.scrollUp = function() {
         $('.event-tab').scrollTop(0);
+    }
+
+    // handles event upvote and downvote
+    $scope.vote = function(listing){        
+        let event_id = listing._id;
+
+        if(!$scope.$storage.userData){
+            $location.path("/login");
+        }else{
+            $http.post('/api/user/vote/', {listing_id: event_id}).success(function(response){
+                listing.meta.score += response.count;
+            });
+        }
     }
 });
 
