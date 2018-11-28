@@ -30,6 +30,9 @@ router.route('/locations')
   .get(db.locations.list);
 
 router.route('/listings/user')
-    .get(db.listings.findByUser);
+  .get(db.listings.findByUser);
+
+router.route('/user/vote/')
+  .post(db.users.vote);
 
 module.exports = router;
