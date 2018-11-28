@@ -11,7 +11,11 @@ var userSchema = new Schema({
   password: {
     type: String,
     required: true,
-  }
+  },
+  voted_listings:[{
+      listing_id: String,
+      count: Number,
+  }],
 });
 
 userSchema.pre('save', function(next) {
