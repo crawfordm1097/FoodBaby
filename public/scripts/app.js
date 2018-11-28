@@ -289,7 +289,7 @@ app.controller('EventsController', function ($scope, $rootScope,  $location, $ht
     }
 
     // handles event upvote and downvote
-    $scope.vote = function(listing){        
+    $rootScope.vote = function(listing){        
         let event_id = listing._id;
 
         if(!$scope.$storage.userData){
