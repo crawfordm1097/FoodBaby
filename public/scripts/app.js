@@ -243,7 +243,6 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
   $scope.score = 0;
   $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
-    console.log(res);
     $scope.score = res.data[0].count;
   });
 
@@ -289,7 +288,7 @@ app.controller('EventsController', function ($scope, $rootScope,  $location, $ht
     }
 
     // handles event upvote and downvote
-    $rootScope.vote = function(listing){        
+    $rootScope.vote = function(listing){
         let event_id = listing._id;
 
         if(!$scope.$storage.userData){
