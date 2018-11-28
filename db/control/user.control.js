@@ -1,4 +1,5 @@
 const users = require('../models/user.schema.js'),
+      listings = require('../models/listing.schema.js'),
       bcrypt = require('bcryptjs');
 
 exports.create = function(req, res) {
@@ -46,3 +47,72 @@ exports.updatePassword = function(username, newPassword) {
 
   return updateSuccessful;
 };
+
+
+/*
+  Upvote and down vote functionaltiy.
+ */
+exports.vote = function(req, res) {
+
+  if(req.isAuthenticated()){
+
+    let user = req.user;
+    let voted_listing = undefined;
+    let voted_listings = req.user.voted_listings;
+    let listing_id = req.body.listing_id;
+    let previously_voted = -1;
+
+    for (let i=0; i < voted_listings.length; i++) {
+      if (voted_listings[i].listing_id === listing_id) {
+          voted_listing = voted_listings[i];
+          previously_voted = i;
+          break;
+      }
+    }
+    
+    if(voted_listing == undefined){
+      voted_listing = {
+        listing_id: listing_id,
+        count: 1,
+      };
+
+      voted_listings.push(voted_listing);
+    }else{
+      voted_listing.count = voted_listing.count === 1 ? -1 : 1;
+    }
+
+    // update listing
+    listings.findOne({'_id': listing_id}, function(err, listing){
+      if(!err){
+        listing.meta.score += voted_listing.count;
+
+        if(listing.meta.score < 0)
+          listing.meta.score = 0;
+
+        listing.save();
+      }else{
+        res.status(404).send({count : 0});
+      }
+    });
+
+    // save user
+    users.findOne({'username': user.username}, function(err, user){
+      if(!err){
+        if(previously_voted == -1){
+          user.voted_listings.push(voted_listing);
+        }else{
+          user.voted_listings[previously_voted].count = voted_listing.count;
+        }
+        user.save();
+      }else{
+        res.status(404).send({count : 0});
+      }
+    });
+
+    res.status(200).send({count : voted_listing.count});
+
+  }else{
+    res.status(401).send();
+  }
+  
+}
