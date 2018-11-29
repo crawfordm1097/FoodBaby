@@ -90,12 +90,9 @@ exports.recent = function(req, res) {
 exports.findByUser = function(req, res) {
 
   if(req.isAuthenticated()){
-    listings.find({})
+    listings.find({'posted_by' : req.user._id})
       .populate('location')
-      .populate({
-        path: 'posted_by',
-        match: { 'username': req.user.username},
-      })
+      .populate('posted_by')
       .exec((err, entries) => {
         if (err) {
           res.status(400).send(err);
@@ -106,7 +103,7 @@ exports.findByUser = function(req, res) {
   }else{
     res.status(401).send();
   }
-
+  
 }
 
 /*

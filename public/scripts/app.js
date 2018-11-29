@@ -223,7 +223,6 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 
     $scope.matchPassword = function() {
         $scope.passwordMatches = $scope.account.newPassword == $scope.account.confirmNewPassword;
-        console.log($scope.passwordMatches);
         return $scope.passwordMatches;
     };
 
@@ -244,20 +243,10 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
   $scope.score = 0;
   $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
-    console.log(res);
     $scope.score = res.data[0].count;
   });
 
-    $scope.sortByOccurence = function (listing, includePast) {
-        var now = new Date();
-        var curr = new Date(listing.time.end);
-
-        if ((includePast && curr < now) || (!includePast && curr > now)) {
-            return listing;
-        }
-    }
-
-    $scope.setEvent = function (event) {
+ $scope.setEvent = function (event) {
     $rootScope.currEvent = {
         name: event.name,
         date: new Date(event.time.start),
@@ -270,7 +259,7 @@ app.controller('ProfileController',  function($scope, $rootScope, $location, $ht
 }
 });
 
-app.controller('EventsController', function ($scope, $rootScope, $http) {
+app.controller('EventsController', function ($scope, $rootScope,  $location, $http) {
     $rootScope.currEvent;
 
     $scope.sortByOccurence = function (listing, includePast) {
@@ -296,6 +285,19 @@ app.controller('EventsController', function ($scope, $rootScope, $http) {
 
     $scope.scrollUp = function() {
         $('.event-tab').scrollTop(0);
+    }
+
+    // handles event upvote and downvote
+    $rootScope.vote = function(listing){
+        let event_id = listing._id;
+
+        if(!$scope.$storage.userData){
+            $location.path("/login");
+        }else{
+            $http.post('/api/user/vote/', {listing_id: event_id}).success(function(response){
+                listing.meta.score += response.count;
+            });
+        }
     }
 });
 
