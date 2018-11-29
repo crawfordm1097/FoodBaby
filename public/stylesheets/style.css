@@ -76,6 +76,10 @@ body {
     margin: -1rem auto -1rem auto !important;
 }
 
+tr + .no-list-msg {
+    display: none;
+}
+
 .input-group {
     padding: 10px;
 }

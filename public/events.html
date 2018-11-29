@@ -58,6 +58,13 @@
 
                     </td>
                 </tr>
+
+                <!-- Message for empty tabs -->
+                <tr ng-if="listingsLoaded" class="no-list-msg">
+                    <td>
+                        <div>There are no matching events, yet! Be the change you wish to see.</div>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
