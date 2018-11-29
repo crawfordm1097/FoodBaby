@@ -137,7 +137,12 @@ footer ul li a {
 
 .profile-card{
     width: 25%;
-    height: 50%;
+    height: 70%;
+}
+
+.card-img-top{
+    height: 19vw;
+    object-fit: cover;
 }
 
 .profile-event-tab{
