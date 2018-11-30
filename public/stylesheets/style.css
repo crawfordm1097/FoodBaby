@@ -46,10 +46,11 @@ body {
     border: 1px solid transparent;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
+    color: #0021A5;
 }
 
 .event-tab .nav-tabs .nav-item .nav-link.active {
-    color: #495057;
+    color: #FA4616;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;
 }
@@ -73,6 +74,10 @@ body {
 
 .modal-header .close {
     margin: -1rem auto -1rem auto !important;
+}
+
+tr + .no-list-msg {
+    display: none;
 }
 
 .input-group {

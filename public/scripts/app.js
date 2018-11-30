@@ -56,7 +56,9 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
               end: buildDate($scope.newEvent.date, $scope.newEvent.endTime)
           },
           location: $scope.newEvent.location._id,
-          posted_by: $scope.userData._id,
+          posted_by: $scope.$storage.userData._id,
+          room: $scope.newEvent.roomNum,
+          info: $scope.newEvent.info,
           food_type: $scope.newEvent.foodType
       }
 
@@ -94,7 +96,9 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
               end: buildDate($scope.currEvent.date, $scope.currEvent.endTime)
           },
           location: $rootScope.currEvent.location._id,
-          food_type: $rootScope.currEvent.foodType
+          room: $rootScope.currEvent.roomNum,
+          food_type: $rootScope.currEvent.foodType,
+          info: $rootScope.currEvent.info
       }
 
       $http.put('/api/listings/id/' + $rootScope.currEvent.id, event).then((response) => {
@@ -223,7 +227,6 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 
     $scope.matchPassword = function() {
         $scope.passwordMatches = $scope.account.newPassword == $scope.account.confirmNewPassword;
-        console.log($scope.passwordMatches);
         return $scope.passwordMatches;
     };
 
@@ -244,20 +247,10 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
   $scope.score = 0;
   $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
-    console.log(res);
     $scope.score = res.data[0].count;
   });
 
-    $scope.sortByOccurence = function (listing, includePast) {
-        var now = new Date();
-        var curr = new Date(listing.time.end);
-
-        if ((includePast && curr < now) || (!includePast && curr > now)) {
-            return listing;
-        }
-    }
-
-    $scope.setEvent = function (event) {
+ $scope.setEvent = function (event) {
     $rootScope.currEvent = {
         name: event.name,
         date: new Date(event.time.start),
@@ -270,7 +263,7 @@ app.controller('ProfileController',  function($scope, $rootScope, $location, $ht
 }
 });
 
-app.controller('EventsController', function ($scope, $rootScope, $http) {
+app.controller('EventsController', function ($scope, $rootScope,  $location, $http) {
     $rootScope.currEvent;
 
     $scope.sortByOccurence = function (listing, includePast) {
@@ -289,13 +282,28 @@ app.controller('EventsController', function ($scope, $rootScope, $http) {
             startTime: new Date(event.time.start),
             endTime: new Date(event.time.end),
             location: event.location,
+            roomNum: event.room,
             foodType: event.food_type,
+            info: event.info,
             id: event._id
         }
     }
 
     $scope.scrollUp = function() {
         $('.event-tab').scrollTop(0);
+    }
+
+    // handles event upvote and downvote
+    $rootScope.vote = function(listing){
+        let event_id = listing._id;
+
+        if(!$scope.$storage.userData){
+            $location.path("/login");
+        }else{
+            $http.post('/api/user/vote/', {listing_id: event_id}).success(function(response){
+                listing.meta.score += response.count;
+            });
+        }
     }
 });
 
@@ -334,7 +342,9 @@ app.directive('mapbox', function() {
                               time: {
                                   start: new Date(recentevents[i].time.start).toLocaleString(), //prettify dates
                                   end: new Date(recentevents[i].time.end).toLocaleString()
-                              }
+                              },
+                              info: recentevents[i].info,
+                              room: recentevents[i].room
                           };
 
                           if (curr == undefined) { //first
@@ -377,10 +387,10 @@ app.directive('mapbox', function() {
                   geojson.features.forEach(function (marker) {
                       var html = '';
 
-                      marker.properties.events.forEach(function (event) { //Create list of event info
-                          html += '<h3>' + event.title + '</h3><p><b>' + marker.properties.location.name + ' (' + marker.properties.location.code + ')</b></p><p>'
+                      marker.properties.events.forEach(function(event) { //Create list of event info
+                          html += '<h3>' + event.title + '</h3><p><b>' + (event.room == undefined ? '' : event.room + ' ') + marker.properties.location.name + ' (' + marker.properties.location.code + ')</b></p><p>'
                                       + event.time.start + ' - ' + event.time.end + '</p><p>'
-                                      + event.food_type + '</p>'
+                                      + event.food_type + '</p>' + (event.info == undefined ? '' : '<p>' + event.info + '</p>')
                       });
 
                       new mapboxgl.Marker({ color: "000000" })
