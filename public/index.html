@@ -63,7 +63,7 @@
                                     {{$storage.userData.username}}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#" ng-click="getProfile()">Profile</a>
+                                    <button class="dropdown-item" ng-click="getProfile()">Profile</button>
                                     <a class="dropdown-item" href="#account">Change Password</a>
                                     <button class="dropdown-item" ng-click="logout()">Log out</button>
                                 </div>
@@ -91,30 +91,52 @@
 
                     <div class="modal-body">
                         <form name="add-listing-form" ng-submit="addEvent()">
-                            <div class="form-group col-md-10">
-                                <label>Name</label>
-                                <input type="text" class="form-control" id="name-input" ng-model="newEvent.name" required>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" id="name-input" ng-model="newEvent.name" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-10">
-                                <md-datepicker ng-model="newEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <md-datepicker ng-model="newEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>Start Time</label>
-                                <input type="time" class="form-control" ng-model="newEvent.startTime" required>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Start Time</label>
+                                    <input type="time" class="form-control" ng-model="newEvent.startTime" required>
+                                </div>
+                                <div class="form-group col">
+                                    <label>End Time</label>
+                                    <input type="time" class="form-control" ng-model="newEvent.endTime" min="{{checkValidTime(minDate, newEvent.startTime, newEvent.date) | date:'HH:mm'}}" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>End Time</label>
-                                <input type="time" class="form-control" ng-model="newEvent.endTime" min="{{checkValidTime(minDate, newEvent.startTime, newEvent.date) | date:'HH:mm'}}" required>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Location</label>
+                                    <select class="form-control" ng-model="newEvent.location" ng-options="location.name for location in locations | orderBy: 'name'" required>
+                                        <option style="display:none" value="">Select a location</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Room Number</label>
+                                    <input type="text" maxlength="50" class="form-control" ng-model="newEvent.roomNum">
+                                    <small class="form-text text-muted">Optional</small>
+                                </div>
                             </div>
-                            <div class="form-group col-md-10">
-                                <label>Location</label>
-                                <select class="form-control" ng-model="newEvent.location" ng-options="location.name for location in locations | orderBy: 'name'" required>
-                                    <option style="display:none" value="">Select a location</option>
-                                </select>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Food Offered</label>
+                                    <textarea type="text" maxlength="50" class="form-control" ng-model="newEvent.foodType" required></textarea>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>Food Offered</label>
-                                <textarea type="text" maxlength="50" class="form-control" ng-model="newEvent.foodType" required></textarea>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Event Description</label>
+                                    <textarea type="text" maxlength="100" class="form-control" ng-model="newEvent.info"></textarea>
+                                    <small class="form-text text-muted">Optional</small>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary" ng-disabled="add-event.$invalid">Submit</button>
                         </form>
