@@ -40,13 +40,11 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#events">Events</a>
                     </li>
-                </ul>
 
-                <ul class="navbar-nav ml-auto">
     
                     <div ng-show="!$storage.userData">
                         <li class="nav-item">
@@ -129,8 +127,8 @@
     <footer>
         <button type="button" class="btn btn-light" id="add-btn" data-toggle="{{$storage.userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">Add Event</button>
         <ul>
-            <li><a href="https://twitter.com/UFfoodbaby"><img class = "social-media-logo" src="images/twitter_logo.png"/></a></li>
-            <li><a href="https://cen3031group2.weebly.com/"><img class = "social-media-logo" src="images/weebly_logo.png"/></a></li>
+            <li><a href="https://twitter.com/UFfoodbaby" target="_blank"><img class = "social-media-logo" src="images/twitter_logo.png"/></a></li>
+            <li><a href="https://cen3031group2.weebly.com/" target="_blank"><img class = "social-media-logo" src="images/weebly_logo.png"/></a></li>
         </ul>
     </footer>
 
