@@ -6,12 +6,9 @@
             Overview
         </div>
         <img class="card-img-top" src="/images/default_profile_img.png"/>
-        <div class="card-body">
-            Email: {{$storage.userData.username}}
-            <br>
-            Score: {{ score }}
-            <br>
-        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Your Karma: {{ score }}</li>
+        </ul>
     </div>
 
     <!--My Events Tab-->
