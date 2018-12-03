@@ -20,6 +20,40 @@ body {
     overflow-y: auto;
 }
 
+.btn.btn-uf-blue {
+    color: #8a98d5;
+    background-color: #fff;
+    border: 2px solid #8a98d5;
+    font-weight: 600;
+}
+
+.btn.btn-uf-blue:hover:enabled {
+    color: #fff;
+    background-color: #8a98d5;
+    border: 2px solid #8a98d5 !important;
+}
+
+.btn.btn-uf-blue:hover:disabled {
+    cursor: not-allowed;
+}
+
+.btn.btn-uf-orange {
+    color: #fcaa94;
+    background-color: #fff;
+    border: 2px solid #fcaa94;
+    font-weight: 600;
+}
+
+.btn.btn-uf-orange:hover {
+    color: #fff;
+    background-color: #fcaa94;
+    border: 2px solid #fcaa94;
+}
+
+.btn-container {
+    text-align: center;
+}
+
 .event-tab {
     height: 100%;
     overflow: auto
@@ -46,17 +80,22 @@ body {
     border: 1px solid transparent;
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-    color: #0021A5;
+    color: #0021A575;
+    font-weight: bold;
 }
 
 .event-tab .nav-tabs .nav-item .nav-link.active {
-    color: #FA4616;
+    color: #FA461675;
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff;
 }
 
 .event-tab table > tbody > tr:nth-child(1) > th, table > tbody > tr:nth-child(1) > td {
     border-top: none;
+}
+
+table > tbody > tr:nth-child(1) > td:nth-child(1) {
+    width: 1%
 }
 
 .fa-trash, .fa-edit {
@@ -68,20 +107,32 @@ body {
     background-color: #00000000;
 }
 
+.mapboxgl-popup {
+    max-width: 20%;
+}
+
 .md-datepicker-calendar-pane {
     z-index: 1200
 }
 
-.modal-header .close {
-    margin: -1rem auto -1rem auto !important;
+.modal-header {
+    display: initial;
 }
 
 tr + .no-list-msg {
     display: none;
 }
 
+.no-list-msg:hover {
+    background-color: #00000000 !important;
+}
+
 .input-group {
     padding: 10px;
+}
+
+.nav-link {
+    cursor: pointer;
 }
 
 .navbar-nav .input-group > input {
