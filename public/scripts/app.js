@@ -185,7 +185,6 @@ app.config(function($routeProvider) {
 });
 
 app.controller('SignUpController', function($scope, $location, $http) {
-  $scope.validEmail = true;
   $scope.signup = function() {
     $scope.usernameExists = false;
     $http.post('/api/user/register', {username:$scope.username, password:$scope.password}).success(function(res) {
