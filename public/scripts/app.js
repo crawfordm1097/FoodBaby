@@ -185,6 +185,7 @@ app.config(function($routeProvider) {
 });
 
 app.controller('SignUpController', function($scope, $location, $http) {
+  $scope.validEmail = true;
   $scope.signup = function() {
     $scope.usernameExists = false;
     $http.post('/api/user/register', {username:$scope.username, password:$scope.password}).success(function(res) {
@@ -196,10 +197,8 @@ app.controller('SignUpController', function($scope, $location, $http) {
     });
   }
   $scope.matchingPasswords = function() {
-    return $scope.password === $scope.cpass;
-  }
-  $scope.validEmail = function() {
-    return $scope.username;
+    return !$scope.password || !$scope.cpass
+           || ($scope.password === $scope.cpass);
   }
 });
 
