@@ -196,10 +196,8 @@ app.controller('SignUpController', function($scope, $location, $http) {
     });
   }
   $scope.matchingPasswords = function() {
-    return $scope.password === $scope.cpass;
-  }
-  $scope.validEmail = function() {
-    return $scope.username;
+    return !$scope.password || !$scope.cpass
+           || ($scope.password === $scope.cpass);
   }
 });
 
