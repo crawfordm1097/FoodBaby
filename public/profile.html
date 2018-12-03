@@ -32,7 +32,7 @@
         <div class="tab-content">
             <div class="tablewrapper col-md-12">
                 <table class="table table-hover">
-                    <tr ng-repeat="listing in userListings | orderBy:listingsSort | filter:searchBy" ng-if="listing.posted_by != null">
+                    <tr ng-repeat="listing in $storage.userListings | orderBy:listingsSort | filter:searchBy" ng-if="listing.posted_by != null">
                         <td>
                             <img ng-src='https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s+000000({{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}})/{{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}},12,0.00,0.00/200x150?access_token=pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw'>
                         </td>
@@ -59,7 +59,7 @@
                     </tr>
 
                     <!--If user has no events posted-->
-                    <tr ng-show="{{userListings.length === 0}}" class="no-list-msg">
+                    <tr ng-show="{{$storage.userListings.length === 0}}" class="no-list-msg">
                         <td>
                             <div>
                                You haven't created any events!

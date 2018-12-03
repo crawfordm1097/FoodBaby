@@ -8,7 +8,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
         userdata is stored persistently in localstorage.
         $storage and $localstorage  are automatically synchronized.
     */
-    $scope.$storage = $localStorage.$default({ userData: undefined,});
+    $scope.$storage = $localStorage.$default({ userData: undefined, userListings: undefined, });
 
   $http.get('/api/listings').then((response) => {
     $rootScope.listings = response.data;
@@ -135,7 +135,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
 
    $scope.getProfile = function(){
     $http.get('/api/listings/user').success(function(response){
-      $rootScope.userListings = response;
+      $scope.$storage.userListings = response;
       $location.path("/profile");
     }).error(function(){
       $location.path("/login");
@@ -250,17 +250,17 @@ app.controller('ProfileController',  function($scope, $rootScope, $location, $ht
     $scope.score = res.data[0].count;
   });
 
- $scope.setEvent = function (event) {
-    $rootScope.currEvent = {
-        name: event.name,
-        date: new Date(event.time.start),
-        startTime: new Date(event.time.start),
-        endTime: new Date(event.time.end),
-        location: event.location,
-        foodType: event.food_type,
-        id: event._id
+    $scope.setEvent = function (event) {
+        $rootScope.currEvent = {
+            name: event.name,
+            date: new Date(event.time.start),
+            startTime: new Date(event.time.start),
+            endTime: new Date(event.time.end),
+            location: event.location,
+            foodType: event.food_type,
+            id: event._id
+        }
     }
-}
 });
 
 app.controller('EventsController', function ($scope, $rootScope,  $location, $http) {
