@@ -57,7 +57,7 @@
 
                     <div ng-show="$storage.userData">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{$storage.userData.username}}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -84,7 +84,7 @@
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Please fill out the form to add an event.</h4>
+                        <h4 class="modal-title">Event Form</h4>
                     </div>
 
                     <div class="modal-body">
@@ -92,7 +92,8 @@
                             <div class="row">
                                 <div class="form-group col">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" id="name-input" ng-model="newEvent.name" required>
+                                    <input type="text" class="form-control" id="name-input" maxlength="50" ng-model="newEvent.name" required>
+                                    <small class="form-text text-muted">{{newEvent.name.length == undefined ? 0 : newEvent.name.length}} / 50</small>
                                 </div>
                             </div>
                             <div class="row">
@@ -119,24 +120,27 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label>Room Number</label>
-                                    <input type="text" maxlength="50" class="form-control" ng-model="newEvent.roomNum">
-                                    <small class="form-text text-muted">Optional</small>
+                                    <input type="text" maxlength="5" class="form-control" ng-model="newEvent.roomNum">
+                                    <small class="form-text text-muted">Optional - {{newEvent.roomNum.length == undefined ? 0 : newEvent.roomNum.length}} / 5</small>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col">
                                     <label>Food Offered</label>
-                                    <textarea type="text" maxlength="50" class="form-control" ng-model="newEvent.foodType" required></textarea>
+                                    <textarea type="text" maxlength="100" class="form-control" ng-model="newEvent.foodType" required></textarea>
+                                    <small class="form-text text-muted">{{newEvent.foodType.length == undefined ? 0 : newEvent.foodType.length}} / 100</small>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col">
                                     <label>Event Description</label>
-                                    <textarea type="text" maxlength="100" class="form-control" ng-model="newEvent.info"></textarea>
-                                    <small class="form-text text-muted">Optional</small>
+                                    <textarea type="text" maxlength="150" class="form-control" ng-model="newEvent.info"></textarea>
+                                    <small class="form-text text-muted">Optional - {{newEvent.info.length == undefined ? 0 : newEvent.info.length}} / 150</small>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary" ng-disabled="add-event.$invalid">Submit</button>
+                            <div class="btn-container">
+                                <button type="submit" class="btn btn-uf-blue" ng-disabled="add-listing-form.$invalid">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -147,7 +151,7 @@
 
     <!-- Footer for the page -->
     <footer>
-        <button type="button" class="btn btn-light" id="add-btn" data-toggle="{{$storage.userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">Add Event</button>
+        <button type="button" class="btn btn-uf-blue" id="add-btn" data-toggle="{{$storage.userData ? 'modal' : ''}}" data-target="#add-event" ng-click="checkForUser()">+ Add Event</button>
         <ul>
             <li><a href="https://twitter.com/UFfoodbaby" target="_blank"><img class = "social-media-logo" src="images/twitter_logo.png"/></a></li>
             <li><a href="https://cen3031group2.weebly.com/" target="_blank"><img class = "social-media-logo" src="images/weebly_logo.png"/></a></li>

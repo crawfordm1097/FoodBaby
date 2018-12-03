@@ -6,12 +6,9 @@
             Overview
         </div>
         <img class="card-img-top" src="/images/default_profile_img.png"/>
-        <div class="card-body">
-            Email: {{$storage.userData.username}}
-            <br>
-            Score: {{ score }}
-            <br>
-        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Your Karma: {{ score }}</li>
+        </ul>
     </div>
 
     <!--My Events Tab-->
@@ -45,14 +42,15 @@
                                 <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
                                 <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
                                 <br><br>
-                                {{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}<br>
-                                {{listing.food_type}}
+                                <span ng-if="listing.room">{{listing.room}} </span>{{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}
+                                <br><br>{{listing.food_type}}
+                                <span ng-if="listing.info"><br><br>{{listing.info}}</span>
                             </div>
 
 
                             <!--UI for event meta info: upvotes and flags-->
                             <div class = "event-meta mt-4 mb-2">
-                                <button type="button" class="mr-2 btn btn-outline-primary btn-sm" ng-click="vote(listing)">
+                                <button type="button" class="mr-2 btn btn-uf-blue btn-sm" ng-click="vote(listing)">
                                     <i class="fa fa-arrow-up"></i>
                                     <span class = "m-2">{{listing.meta.score}}</span>
                                 </button>
@@ -61,10 +59,10 @@
                     </tr>
 
                     <!--If user has no events posted-->
-                    <tr ng-show="{{userListings.length === 0}}">
+                    <tr ng-show="{{userListings.length === 0}}" class="no-list-msg">
                         <td>
-                            <div class="alert alert-info" role="alert">
-                               You have not posted any events, yet!
+                            <div>
+                               You haven't created any events!
                             </div>
                         </td>
                     </tr>
@@ -80,37 +78,61 @@
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Please fill out the form to add your updates.</h4>
+                        <h4 class="modal-title">Update Form</h4>
                     </div>
 
                     <div class="modal-body">
                         <form name="update-listing-form" ng-submit="updateEvent()">
-                            <div class="form-group col-md-10">
-                                <label>Name</label>
-                                <input type="text" class="form-control" id="name-input"ng-model="currEvent.name" required>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" id="name-input" maxlength="50" ng-model="currEvent.name" required>
+                                    <small class="form-text text-muted">{{currEvent.name.length == undefined ? 0 : currEvent.name.length}} / 50</small>
+                                </div>
                             </div>
-                            <div class="form-group col-md-10">
-                                <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <md-datepicker ng-model="currEvent.date" md-placeholder="Enter Date" md-min-date="minDate" required></md-datepicker>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>Start Time</label>
-                                <input type="time" class="form-control" ng-model="currEvent.startTime" required>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Start Time</label>
+                                    <input type="time" class="form-control" ng-model="currEvent.startTime" required>
+                                </div>
+                                <div class="form-group col">
+                                    <label>End Time</label>
+                                    <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{checkValidTime(minDate, currEvent.startTime, currEvent.date) | date:'HH:mm'}}" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>End Time</label>
-                                <input type="time" class="form-control" ng-model="currEvent.endTime" min="{{currEvent.startTime | date:'HH:mm:ss'}}" required>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Location</label>
+                                    <select class="form-control" ng-options="location as location.name for location in locations | orderBy: 'name' track by location.code" ng-model="currEvent.location" required></select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Room Number</label>
+                                    <input type="text" maxlength="5" class="form-control" ng-model="currEvent.roomNum">
+                                    <small class="form-text text-muted">Optional - {{currEvent.roomNum == undefined ? 0 : currEvent.roomNum}} / 5</small>
+                                </div>
                             </div>
-                            <div class="form-group col-md-10">
-                                <label>Location</label>
-                                <select class="form-control" ng-options="location as location.name for location in locations" ng-model="currEvent.location" required>
-                                    <option style="display:none" value="">Confirm the location</option>
-                                </select>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Food Offered</label>
+                                    <textarea type="text" maxlength="100" class="form-control" ng-model="currEvent.foodType" required></textarea>
+                                    <small class="form-text text-muted">{{currEvent.foodType.length == undefined ? 0 : currEvent.foodType.length}} / 100</small>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label>Food Offered</label>
-                                <textarea type="text" class="form-control" ng-model="currEvent.foodType" required></textarea>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label>Event Description</label>
+                                    <textarea type="text" maxlength="150" class="form-control" ng-model="currEvent.info"></textarea>
+                                    <small class="form-text text-muted">Optional - {{currEvent.info.length == undefined ? 0 : currEvent.info.length}} / 150</small>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary" ng-disabled="update-event.$invalid">Submit</button>
+                            <div class="btn-container">
+                                <button type="submit" class="btn btn-uf-blue" ng-disabled="update-listing-form.$invalid">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
