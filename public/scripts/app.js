@@ -1,6 +1,6 @@
 var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngStorage']);
 
-app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval, $localStorage) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $window, $interval, $localStorage) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
     $scope.minDate = new Date();
 
@@ -150,6 +150,11 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
         $location.path("/");
     });
   };
+
+  //Add event listener for event beforeunload, which is called whenever browser is closed
+  $window.addEventListener('beforeunload', function(e) {
+      $localStorage.$reset();
+  })
 
 });
 
