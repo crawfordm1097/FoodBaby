@@ -68,6 +68,7 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
           $http.get('/api/listings').then((response) => { //Refresh listings
               $rootScope.listings = response.data;
 
+              //Update user listings after add
               if ($scope.$storage.userData) {
                   $http.get('/api/listings/user').then((response) => {
                       $scope.$storage.userListings = response.data;
@@ -87,6 +88,21 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
       $http.delete('/api/listings/id/' + id).then((response) => {
           $http.get('/api/listings').then((response) => { //Refresh listings
               $rootScope.listings = response.data;
+
+              if ($scope.$storage.userData) {
+                  //Update user listings after delete
+                  $http.get('/api/listings/user').then((response) => {
+                      $scope.$storage.userListings = response.data;
+                  }, (error) => {
+                      console.log('Unable to get user listings: ', error);
+                  });
+
+                  //Update user karma after delete
+                  $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
+                      var data = res.data[0];
+                      $rootScope.score = (data == undefined ? 0: data.count);
+                  });
+              }
           }, (error) => {
               console.log('Unable to refresh listings: ', error);
           });
@@ -114,12 +130,35 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
 
           $http.get('/api/listings').then((response) => { //Refresh listings
               $rootScope.listings = response.data;
+
+              //Update user listings after update
+              if ($scope.$storage.userData) {
+                  $http.get('/api/listings/user').then((response) => {
+                      $scope.$storage.userListings = response.data;
+                  }, (error) => {
+                      console.log('Unable to get user listings: ', error);
+                  });
+              }
           }, (error) => {
               console.log('Unable to refresh listings: ', error);
           });
       }, (error) => {
           console.log('Unable to update event: ', error);
       });
+  }
+
+    // handles event upvote and downvote
+  $scope.vote = function (listing) {
+      let event_id = listing._id;
+
+      if (!$scope.$storage.userData) {
+          $location.path("/login");
+      } else {
+          $http.post('/api/user/vote/', { listing_id: event_id }).success(function (response) {
+              listing.meta.score += response.count;
+              $rootScope.score += response.count; //Update user's karma (case where upvote is on profile page)
+          });
+      }
   }
 
   $scope.checkValidTime = function (minDate, startTime, date) {
@@ -251,9 +290,9 @@ app.controller('PasswordController', function($scope, $rootScope, $location, $ht
 });
 
 app.controller('ProfileController',  function($scope, $rootScope, $location, $http){
-  $scope.score = 0;
+  $rootScope.score = 0;
   $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
-    $scope.score = res.data[0].count;
+      if (res.data[0] != undefined) $rootScope.score = res.data[0].count;
   });
 
     $scope.setEvent = function (event) {
@@ -297,19 +336,6 @@ app.controller('EventsController', function ($scope, $rootScope,  $location, $ht
 
     $scope.scrollUp = function() {
         $('.event-tab').scrollTop(0);
-    }
-
-    // handles event upvote and downvote
-    $rootScope.vote = function(listing){
-        let event_id = listing._id;
-
-        if(!$scope.$storage.userData){
-            $location.path("/login");
-        }else{
-            $http.post('/api/user/vote/', {listing_id: event_id}).success(function(response){
-                listing.meta.score += response.count;
-            });
-        }
     }
 });
 
