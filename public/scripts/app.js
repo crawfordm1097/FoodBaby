@@ -1,14 +1,15 @@
 var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngStorage']);
 
-app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval, $sessionStorage) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval, $localStorage) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
     $scope.minDate = new Date();
 
+
     /*
-        userdata is stored persistently in sessionStorage.
-        $storage and $sessionStorage  are automatically synchronized.
+        userdata is stored persistently in localStorage.
+        $storage and $localStorage  are automatically synchronized.
     */
-    $scope.$storage = $sessionStorage.$default({ userData: undefined, userListings: undefined, });
+    $scope.$storage = $localStorage.$default({ userData: undefined, });
 
   $http.get('/api/listings').then((response) => {
     $rootScope.listings = response.data;
@@ -28,10 +29,6 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
   }, (error) => {
     console.log('Unable to retrieve locations: ', error);
   });
-
-  $scope.view = function(id) {
-    window.location = `/api/listings/id/${id}`;
-  }
 
   $scope.$on('$routeChangeStart', function(event, route) {
       if (route.requireAuth && !$scope.$storage.userData)    // verify if user is authorized to access the route
@@ -65,17 +62,8 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
       $http.post('/api/listings', event).then((response) => {
           $('#add-event').modal('hide');
 
-          $http.get('/api/listings').then((response) => { //Refresh listings
+          $http.get('/api/listings').then((response) => { //Add to $scope.listings (must be done in get request to get db ids)
               $rootScope.listings = response.data;
-
-              //Update user listings after add
-              if ($scope.$storage.userData) {
-                  $http.get('/api/listings/user').then((response) => {
-                      $scope.$storage.userListings = response.data;
-                  }, (error) => {
-                      console.log('Unable to get user listings: ', error);
-                  });
-              }
           }, (error) => {
               console.log('Unable to refresh listings: ', error);
           });
@@ -86,26 +74,16 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
 
   $scope.deleteEvent = function (id) {
       $http.delete('/api/listings/id/' + id).then((response) => {
-          $http.get('/api/listings').then((response) => { //Refresh listings
-              $rootScope.listings = response.data;
+          $rootScope.score -= response.data.meta.score; //Update karma after delete
 
-              if ($scope.$storage.userData) {
-                  //Update user listings after delete
-                  $http.get('/api/listings/user').then((response) => {
-                      $scope.$storage.userListings = response.data;
-                  }, (error) => {
-                      console.log('Unable to get user listings: ', error);
-                  });
+          //Remove from $scope.listings
+          var i;
 
-                  //Update user karma after delete
-                  $http.get('/api/user/karma/' + $scope.$storage.userData._id).then((res) => {
-                      var data = res.data[0];
-                      $rootScope.score = (data == undefined ? 0: data.count);
-                  });
-              }
-          }, (error) => {
-              console.log('Unable to refresh listings: ', error);
-          });
+          for (i = 0; i < $scope.listings.length; i++) { //Find index
+              if ($scope.listings[i]._id == id) break;
+          }
+
+          $scope.listings.splice(i, 1); //Remove element
 
       }, (error) => {
           console.log('Unable to delete event: ', error);
@@ -128,17 +106,8 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
       $http.put('/api/listings/id/' + $rootScope.currEvent.id, event).then((response) => {
           $('#update-event').modal('hide');
 
-          $http.get('/api/listings').then((response) => { //Refresh listings
+          $http.get('/api/listings').then((response) => { //Update to $scope.listings (must be done in get request to get db objects)
               $rootScope.listings = response.data;
-
-              //Update user listings after update
-              if ($scope.$storage.userData) {
-                  $http.get('/api/listings/user').then((response) => {
-                      $scope.$storage.userListings = response.data;
-                  }, (error) => {
-                      console.log('Unable to get user listings: ', error);
-                  });
-              }
           }, (error) => {
               console.log('Unable to refresh listings: ', error);
           });
@@ -155,8 +124,14 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
           $location.path("/login");
       } else {
           $http.post('/api/user/vote/', { listing_id: event_id }).success(function (response) {
-              listing.meta.score += response.count;
-              $rootScope.score += response.count; //Update user's karma (case where upvote is on profile page)
+              $rootScope.score += response.count //Update user's karma (case where upvote is on profile page)
+
+              for (var i = 0; i < $scope.listings.length; i++) { //Update $scope.listings score
+                  if ($scope.listings[i]._id == event_id) {
+                      $scope.listings[i].meta.score += response.count;
+                      break;
+                  }
+              }
           });
       }
   }
@@ -180,18 +155,9 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval,
       return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes());
   }
 
-   $scope.getProfile = function(){
-    $http.get('/api/listings/user').success(function(response){
-      $scope.$storage.userListings = response;
-      $location.path("/profile");
-    }).error(function(){
-      $location.path("/login");
-    });
-  };
-
   $scope.logout = function(){
     $http.post('/user/logout').success(function(response){
-        $sessionStorage.$reset();
+        $localStorage.$reset();
         $location.path("/");
     }).error(function(response){
         $location.path("/");
@@ -305,6 +271,10 @@ app.controller('ProfileController',  function($scope, $rootScope, $location, $ht
             foodType: event.food_type,
             id: event._id
         }
+    }
+
+    $scope.filterByUser = function (listing) {
+        return (listing.posted_by._id == $scope.$storage.userData._id);
     }
 });
 

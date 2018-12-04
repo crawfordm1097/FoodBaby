@@ -36,7 +36,7 @@
                         <div>
                             <b>{{listing.name}}</b>
                             <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
-                            <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
+                            <button class="fa fa-trash-o" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
                             <br><br>
                             <span ng-if="listing.room">{{listing.room}} </span>{{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}
                             <br><br>{{listing.food_type}}
