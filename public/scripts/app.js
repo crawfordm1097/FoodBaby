@@ -1,6 +1,6 @@
 var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngStorage']);
 
-app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $window, $interval, $sessionStorage) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $interval, $sessionStorage) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
     $scope.minDate = new Date();
 
@@ -67,6 +67,14 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $window, $
 
           $http.get('/api/listings').then((response) => { //Refresh listings
               $rootScope.listings = response.data;
+
+              if ($scope.$storage.userData) {
+                  $http.get('/api/listings/user').then((response) => {
+                      $scope.$storage.userListings = response.data;
+                  }, (error) => {
+                      console.log('Unable to get user listings: ', error);
+                  });
+              }
           }, (error) => {
               console.log('Unable to refresh listings: ', error);
           });
