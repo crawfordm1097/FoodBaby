@@ -1,14 +1,14 @@
 var app = angular.module('foodBaby', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngStorage']);
 
-app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $window, $interval, $localStorage) => {
+app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $window, $interval, $sessionStorage) => {
     $scope.listingsLoaded = false; //Used to control when directive runs (see ng-if in main.html)
     $scope.minDate = new Date();
 
     /*
-        userdata is stored persistently in localstorage.
-        $storage and $localstorage  are automatically synchronized.
+        userdata is stored persistently in sessionStorage.
+        $storage and $sessionStorage  are automatically synchronized.
     */
-    $scope.$storage = $localStorage.$default({ userData: undefined, userListings: undefined, });
+    $scope.$storage = $sessionStorage.$default({ userData: undefined, userListings: undefined, });
 
   $http.get('/api/listings').then((response) => {
     $rootScope.listings = response.data;
@@ -144,17 +144,12 @@ app.controller('ListingsCtrl', ($scope, $rootScope, $http, $location, $window, $
 
   $scope.logout = function(){
     $http.post('/user/logout').success(function(response){
-        $localStorage.$reset();
+        $sessionStorage.$reset();
         $location.path("/");
     }).error(function(response){
         $location.path("/");
     });
   };
-
-  //Add event listener for event beforeunload, which is called whenever browser is closed
-  $window.addEventListener('beforeunload', function(e) {
-      $localStorage.$reset();
-  })
 
 });
 
