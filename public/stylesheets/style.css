@@ -37,19 +37,6 @@ body {
     cursor: not-allowed;
 }
 
-.btn.btn-uf-orange {
-    color: #fcaa94;
-    background-color: #fff;
-    border: 2px solid #fcaa94;
-    font-weight: 600;
-}
-
-.btn.btn-uf-orange:hover {
-    color: #fff;
-    background-color: #fcaa94;
-    border: 2px solid #fcaa94;
-}
-
 .btn-container {
     text-align: center;
 }
@@ -98,7 +85,7 @@ table > tbody > tr:nth-child(1) > td:nth-child(1) {
     width: 1%
 }
 
-.fa-trash, .fa-edit {
+.fa-trash-o, .fa-edit {
     float: right;
 }
 
@@ -188,7 +175,15 @@ footer ul li a {
 
 .profile-card{
     width: 25%;
-    height: 70%;
+    height: min-content;
+}
+
+.card-header {
+    background: #fff;
+    color: #fcaa94;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
 }
 
 .card-img-top{

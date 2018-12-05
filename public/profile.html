@@ -1,20 +1,9 @@
- <div class="d-flex justify-content-start">
-
-     <!--User Profile-->
-    <div class= "card m-4 profile-card">
-        <div class="card-header">
-            Overview
-        </div>
-        <img class="card-img-top" src="/images/default_profile_img.png"/>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Your Karma: {{ score }}</li>
-        </ul>
-    </div>
+ <div class="profile-page d-flex justify-content-start">
 
     <!--My Events Tab-->
-    <div class="event-tab m-4 profile-event-tab">
+    <div class="event-tab profile-event-tab">
 
-        <ul class="nav nav-tabs" ng-init="includePast=true">
+        <ul class="nav nav-tabs">
             <li class="nav-item">
                 <div class="nav-link active" data-toggle="tab">My Events</div>
             </li>
@@ -32,15 +21,15 @@
         <div class="tab-content">
             <div class="tablewrapper col-md-12">
                 <table class="table table-hover">
-                    <tr ng-repeat="listing in $storage.userListings | orderBy:listingsSort | filter:searchBy" ng-if="listing.posted_by != null">
+                    <tr ng-repeat="listing in listings | orderBy:listingsSort | filter: filterByUser">
                         <td>
                             <img ng-src='https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/pin-s+000000({{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}})/{{listing.location.coordinates.longitude}},{{listing.location.coordinates.latitude}},12,0.00,0.00/200x150?access_token=pk.eyJ1IjoiZm9vZGJhYnlnMiIsImEiOiJjam10YTdtNjAwNWg2M3dwMWw3am14emhzIn0.dlnV1DEKRSxnKRwa7I2qLw'>
                         </td>
                         <td>
                             <div>
                                 <b>{{listing.name}}</b>
-                                <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
-                                <button class="fa fa-trash" ng-click="deleteEvent(listing._id)" ng-if="listing.posted_by._id === $storage.userData._id"></button>
+                                <button class="fa fa-edit" data-toggle="modal" data-target="#update-event" ng-click="setEvent(listing)"></button>
+                                <button class="fa fa-trash-o" ng-click="deleteEvent(listing._id)"></button>
                                 <br><br>
                                 <span ng-if="listing.room">{{listing.room}} </span>{{listing.location.name}} ({{listing.location.code}}): {{listing.time.start | date:"shortDate"}},{{listing.time.start | date:"shortTime"}} - {{listing.time.end   | date:"shortTime"}}
                                 <br><br>{{listing.food_type}}
@@ -59,7 +48,7 @@
                     </tr>
 
                     <!--If user has no events posted-->
-                    <tr ng-show="{{$storage.userListings.length === 0}}" class="no-list-msg">
+                    <tr ng-if="listingsLoaded" class="no-list-msg">
                         <td>
                             <div>
                                You haven't created any events!
@@ -139,4 +128,15 @@
             </div>
         </div>
     </div>
+
+     <!--User Profile-->
+     <div class="card m-4 profile-card">
+         <div class="card-header">
+             Overview
+         </div>
+         <img class="card-img-top" src="/images/default_profile_img.png" />
+         <ul class="list-group list-group-flush">
+             <li class="list-group-item">Karma: {{ score }}</li>
+         </ul>
+     </div>
 </div>
