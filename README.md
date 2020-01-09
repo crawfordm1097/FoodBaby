@@ -3,6 +3,8 @@
 
 CEN3031 Group Project
 
+Check it out [here](http://uffoodbaby.herokuapp.com/#/)!
+
 
 ## Testing
 
